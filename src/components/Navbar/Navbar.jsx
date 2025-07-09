@@ -3,6 +3,7 @@ import logo from "../../assets/logo.png";
 import { Link, NavLink } from "react-router";
 import { FaUserFriends } from "react-icons/fa";
 import { FaBell } from "react-icons/fa6";
+import ThemeToggleBtn from "../ThemeButton/ThemeToggleBtn";
 
 const Navbar = () => {
     return (
@@ -10,15 +11,15 @@ const Navbar = () => {
             <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex items-center justify-between px-4 py-3 bg-base-100 shadow-md">
                 {/* Left: Brand */}
-                <div className="flex items-center justify-center gap-6">
+                <div className="flex items-center justify-center gap-4">
                     <Link to="/" className="flex items-center gap-2">
-                        <img src={logo} alt="Logo" className="w-12" />
+                        <img  src={logo} alt="Logo" className="w-12 rounded-4xl" />
                         <div className="text-xl font-bold">
                             <span className="text-primary">Dormi</span>
                             <span>Dine</span>
                         </div>
                     </Link>
-                    <FaBell className="cursor-pointer hover:scale-130 transition all duration-300 " />
+                    <ThemeToggleBtn/>
                 </div>
 
                 {/* Middle: Desktop Menu */}
@@ -99,6 +100,7 @@ const Navbar = () => {
             </div>
 
             {/* Drawer Side (Mobile Menu) */}
+            
             <div className="drawer-side">
                 <label htmlFor="nav-drawer" className="drawer-overlay"></label>
                 <ul className="menu p-6 w-64 min-h-full bg-base-100 space-y-2">
