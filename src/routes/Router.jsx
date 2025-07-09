@@ -1,8 +1,10 @@
 import { createBrowserRouter } from "react-router";
-import RootLayout from "../layouts/RootLayout.jsx/RootLayout";
-import DashboardLayout from "../layouts/DashboadLayout.jsx/DashboardLayout";
-import HomaPage from "../pages/HomePage";
+import RootLayout from "../layouts/RootLayout/RootLayout";
+import DashboardLayout from "../layouts/DashboadLayout/DashboardLayout";
+import HomePage from "../pages/HomePage";
 import DashboardHome from "../pages/DashboardHome";
+import MealsPage from "../pages/MealsPage";
+import UpcomingMealsPage from "../pages/UpcomingMealsPage";
 
 export const router = createBrowserRouter([
     {
@@ -11,7 +13,15 @@ export const router = createBrowserRouter([
         children:[
             {
             index:true,
-            Component: HomaPage
+            Component: HomePage
+        },
+        {
+            path: '/meals',
+            Component: MealsPage
+        },
+        {
+            path: '/upcoming-meal',
+            Component: UpcomingMealsPage
         }
 
         ],

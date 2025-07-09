@@ -1,50 +1,137 @@
 import React from "react";
-import { fallDown as Menu } from "react-burger-menu";
-import "./Navbar.css";
-import logo from "../../assets/logo.png"
-import { Link } from "react-router";
+import logo from "../../assets/logo.png";
+import { Link, NavLink } from "react-router";
+import { FaUserFriends } from "react-icons/fa";
+import { FaBell } from "react-icons/fa6";
 
 const Navbar = () => {
     return (
-        <div className="w-full bg-base-100 shadow-md px-4 py-3 flex items-center justify-between z-50 fixed top-0 ">
-            {/* Brand */}
-            <Link to='/' className="flex justify-center items-center gap-2">
-            <img className="w-12" src={logo}alt="" />
-            <div className="text-xl font-bold text-primary z-50">Dormi<span className="text-green-500">Dine</span></div>
-            </Link>
+        <div className="drawer z-50 top-0 w-full">
+            <input id="nav-drawer" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content flex items-center justify-between px-4 py-3 bg-base-100 shadow-md">
+                {/* Left: Brand */}
+                <div className="flex items-center justify-center gap-6">
+                    <Link to="/" className="flex items-center gap-2">
+                        <img src={logo} alt="Logo" className="w-12" />
+                        <div className="text-xl font-bold">
+                            <span className="text-primary">Dormi</span>
+                            <span>Dine</span>
+                        </div>
+                    </Link>
+                    <FaBell className="cursor-pointer hover:scale-130 transition all duration-300 " />
+                </div>
 
-            {/* Desktop Nav */}
-            <nav className="hidden md:flex gap-4 items-center">
-                <a href="/" className="text-neutral hover:text-primary">
-                    Home
-                </a>
-                <a href="/about" className="text-neutral hover:text-primary">
-                    About
-                </a>
-                <a href="/meals" className="text-neutral hover:text-primary">
-                    Meals
-                </a>
-                <a href="/login" className="btn btn-primary btn-sm">
-                    Login
-                </a>
-            </nav>
-
-            {/* Mobile Burger Menu */}
-            <div className="md:hidden" pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" }>
-                <Menu right>
-                    <a className="menu-item" href="/">
+                {/* Middle: Desktop Menu */}
+                <div className="hidden md:flex gap-6 items-center">
+                    <NavLink
+                        to="/"
+                        className={({ isActive }) =>
+                            `relative text-neutral duration-200 after:absolute after:bottom-0 after:left-0
+                            after:h-[2px] after:w-full after:bg-primary after:transition-transform after:duration-100 
+                            ${
+                                isActive
+                                    ? "after:scale-x-100"
+                                    : "after:scale-x-0 hover:text-primary"
+                            }`
+                        }>
                         Home
-                    </a>
-                    <a className="menu-item" href="/about">
-                        About
-                    </a>
-                    <a className="menu-item" href="/meals">
+                    </NavLink>
+
+                    <NavLink
+                        to="/meals"
+                        className={({ isActive }) =>
+                            `relative text-neutral duration-200 after:absolute after:bottom-0 after:left-0
+                            after:h-[2px] after:w-full after:bg-primary after:transition-transform after:duration-100 
+                            ${
+                                isActive
+                                    ? "after:scale-x-100"
+                                    : "after:scale-x-0 hover:text-primary"
+                            }`
+                        }>
                         Meals
-                    </a>
-                    <a className="menu-item" href="/login">
-                        Login
-                    </a>
-                </Menu>
+                    </NavLink>
+
+                    <NavLink
+                        to="/upcoming-meal"
+                        className={({ isActive }) =>
+                            `relative text-neutral duration-200 after:absolute after:bottom-0 after:left-0
+                            after:h-[2px] after:w-full after:bg-primary after:transition-transform after:duration-100 
+                            ${
+                                isActive
+                                    ? "after:scale-x-100"
+                                    : "after:scale-x-0 hover:text-primary"
+                            }`
+                        }>
+                        Upcoming Meals
+                    </NavLink>
+                </div>
+
+                <div className="hidden md:flex justify-center items-center gap-4">
+                    <FaBell className="cursor-pointer hover:scale-130 transition all duration-300 " />
+                    <Link
+                        to="/login"
+                        className="btn btn-secondary btn-outline  flex items-center gap-2 transition all duration-500 ">
+                        <FaUserFriends />
+                        Join Us
+                    </Link>
+                </div>
+
+                {/* Right: Burger Icon for Mobile */}
+                <div className="md:hidden">
+                    <label
+                        htmlFor="nav-drawer"
+                        className="btn btn-square btn-ghost">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M4 6h16M4 12h16M4 18h16"
+                            />
+                        </svg>
+                    </label>
+                </div>
+            </div>
+
+            {/* Drawer Side (Mobile Menu) */}
+            <div className="drawer-side">
+                <label htmlFor="nav-drawer" className="drawer-overlay"></label>
+                <ul className="menu p-6 w-64 min-h-full bg-base-100 space-y-2">
+                    <li>
+                        <NavLink
+                            to="/"
+                            className="text-neutral hover:text-primary">
+                            Home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/meals"
+                            className="text-neutral hover:text-primary">
+                            Meals
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink
+                            to="/upcoming-meal"
+                            className="text-neutral hover:text-primary">
+                            Upcoming Meals
+                        </NavLink>
+                    </li>
+                    <li className="mt-6 border-t pt-4">
+                        <Link
+                            to="/login"
+                            className="text-secondary w-full flex justify-center items-center gap-2 btn">
+                            <FaUserFriends />
+                            Join Us
+                        </Link>
+                    </li>
+                </ul>
             </div>
         </div>
     );
