@@ -47,7 +47,7 @@ const ThemeToggleBtn = () => {
                     <BsSunFill className="w-6 h-6 text-yellow-400" />
                 </motion.span>
             )}
-        </AnimatePresence>
+            </AnimatePresence>
         </button>
     );
 };

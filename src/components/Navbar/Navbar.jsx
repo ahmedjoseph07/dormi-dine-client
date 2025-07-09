@@ -13,13 +13,17 @@ const Navbar = () => {
                 {/* Left: Brand */}
                 <div className="flex items-center justify-center gap-4">
                     <Link to="/" className="flex items-center gap-2">
-                        <img  src={logo} alt="Logo" className="w-12 rounded-4xl" />
+                        <img
+                            src={logo}
+                            alt="Logo"
+                            className="w-12 rounded-4xl"
+                        />
                         <div className="text-xl font-bold">
                             <span className="text-primary">Dormi</span>
                             <span>Dine</span>
                         </div>
                     </Link>
-                    <ThemeToggleBtn/>
+                    <ThemeToggleBtn />
                 </div>
 
                 {/* Middle: Desktop Menu */}
@@ -27,12 +31,14 @@ const Navbar = () => {
                     <NavLink
                         to="/"
                         className={({ isActive }) =>
-                            `relative text-neutral duration-200 after:absolute after:bottom-0 after:left-0
-                            after:h-[2px] after:w-full after:bg-primary after:transition-transform after:duration-100 
+                            `relative text-neutral duration-200 
+                            after:absolute after:top-0 after:left-0
+                            after:h-[2px] after:w-full after:bg-primary 
+                            after:origin-left after:scale-x-0 after:transition-transform after:duration-300 
                             ${
                                 isActive
-                                    ? "after:scale-x-100"
-                                    : "after:scale-x-0 hover:text-primary"
+                                    ? "font-bold after:scale-x-100 text-primary"
+                                    : "hover:after:scale-x-100"
                             }`
                         }>
                         Home
@@ -41,12 +47,14 @@ const Navbar = () => {
                     <NavLink
                         to="/meals"
                         className={({ isActive }) =>
-                            `relative text-neutral duration-200 after:absolute after:bottom-0 after:left-0
-                            after:h-[2px] after:w-full after:bg-primary after:transition-transform after:duration-100 
+                            `relative text-neutral duration-200 
+                            after:absolute after:top-0 after:left-0
+                            after:h-[2px] after:w-full after:bg-primary 
+                            after:origin-left after:scale-x-0 after:transition-transform after:duration-300 
                             ${
                                 isActive
-                                    ? "after:scale-x-100"
-                                    : "after:scale-x-0 hover:text-primary"
+                                    ? "font-bold after:scale-x-100 text-primary"
+                                    : "hover:after:scale-x-100"
                             }`
                         }>
                         Meals
@@ -55,12 +63,14 @@ const Navbar = () => {
                     <NavLink
                         to="/upcoming-meal"
                         className={({ isActive }) =>
-                            `relative text-neutral duration-200 after:absolute after:bottom-0 after:left-0
-                            after:h-[2px] after:w-full after:bg-primary after:transition-transform after:duration-100 
+                            `relative text-neutral duration-200 
+                            after:absolute after:top-0 after:left-0
+                            after:h-[2px] after:w-full after:bg-primary 
+                            after:origin-left after:scale-x-0 after:transition-transform after:duration-300 
                             ${
                                 isActive
-                                    ? "after:scale-x-100"
-                                    : "after:scale-x-0 hover:text-primary"
+                                    ? "font-bold after:scale-x-100 text-primary"
+                                    : "hover:after:scale-x-100"
                             }`
                         }>
                         Upcoming Meals
@@ -100,7 +110,7 @@ const Navbar = () => {
             </div>
 
             {/* Drawer Side (Mobile Menu) */}
-            
+
             <div className="drawer-side">
                 <label htmlFor="nav-drawer" className="drawer-overlay"></label>
                 <ul className="menu p-6 w-64 min-h-full bg-base-100 space-y-2">
