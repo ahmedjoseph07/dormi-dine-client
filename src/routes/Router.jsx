@@ -5,35 +5,44 @@ import HomePage from "../pages/HomePage";
 import DashboardHome from "../pages/DashboardHome";
 import MealsPage from "../pages/MealsPage";
 import UpcomingMealsPage from "../pages/UpcomingMealsPage";
+import RegisterPage from "../pages/RegisterPage";
+import LoginPage from "../pages/LoginPage";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         Component: RootLayout,
-        children:[
+        children: [
             {
-            index:true,
-            Component: HomePage
-        },
-        {
-            path: '/meals',
-            Component: MealsPage
-        },
-        {
-            path: '/upcoming-meal',
-            Component: UpcomingMealsPage
-        }
-
+                index: true,
+                Component: HomePage,
+            },
+            {
+                path: "/meals",
+                Component: MealsPage,
+            },
+            {
+                path: "/upcoming-meal",
+                Component: UpcomingMealsPage,
+            },
+            {
+                path: "/register",
+                Component: RegisterPage,
+            },
+            {
+                path: "/login",
+                Component: LoginPage,
+            }
         ],
     },
     {
-        path: '/dashboard',
+        path: "/dashboard",
         Component: DashboardLayout,
-        children:[
+        children: [
             {
-                index:true,
-                Component: DashboardHome
-            }
-        ]
-    }
+                index: true,
+                Component: DashboardHome,
+            },
+        ],
+    },
 ]);
