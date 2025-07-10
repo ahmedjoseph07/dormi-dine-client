@@ -1,20 +1,36 @@
 import React from "react";
 import logo from "../../assets/logo.png";
-import { Link, NavLink } from "react-router";
-import { FaUserFriends } from "react-icons/fa";
+import { Link, NavLink, useNavigate } from "react-router";
+import { FaUserFriends, FaSignOutAlt } from "react-icons/fa";
 import { FaBell } from "react-icons/fa6";
 import ThemeToggleBtn from "../ThemeButton/ThemeToggleBtn";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
+    const { user, logOut } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        await logOut();
+        Swal.fire({
+            position: "top-end",
+            icon: "warning",
+            title: "User logged out successfully",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+    };
+
     return (
-        <div className="shadow-lg">
+        <div className="bg-base-200 shadow-xl">
             <div className="drawer z-50 top-0 w-11/12 md:w-10/12 mx-auto">
                 <input
                     id="nav-drawer"
                     type="checkbox"
                     className="drawer-toggle"
                 />
-                <div className="drawer-content flex items-center justify-between px-4 py-3 bg-base-100">
+                <div className="drawer-content flex items-center justify-between px-4 py-3">
                     {/* Left: Brand */}
                     <div className="flex items-center justify-center gap-4">
                         <Link to="/" className="flex items-center gap-2">
@@ -84,12 +100,44 @@ const Navbar = () => {
 
                     <div className="hidden md:flex justify-center items-center gap-4">
                         <FaBell className="cursor-pointer hover:scale-130 transition all duration-300 " />
-                        <Link
-                            to="/login"
-                            className="btn btn-secondary btn-outline  flex items-center gap-2 transition all duration-500 ">
-                            <FaUserFriends />
-                            Join Us
-                        </Link>
+                        {user ? (
+                            <div className="dropdown dropdown-end">
+                                <div
+                                    tabIndex={0}
+                                    role="button"
+                                    className="btn btn-ghost btn-circle avatar tooltip tooltip-bottom before:text-primary before:bg-neutral before:font-bold"
+                                    data-tip={user.displayName || "Profile"}>
+                                    <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                        <img src={user.photoURL} />
+                                    </div>
+                                </div>
+                                <ul
+                                    tabIndex={0}
+                                    className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content rounded-box w-48">
+                                    <li className="text-center btn btn-accent mb-2 font-bold py-2 text-neutral pointer-events-none">
+                                        Username :{" "}
+                                        {user.displayName || "No Name"}
+                                    </li>
+                                    <Link to="/dashboard" className="btn mb-2">
+                                        Dashboard
+                                    </Link>
+                                    <li>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="btn flex items-center gap-2 text-secondary">
+                                            <FaSignOutAlt /> Logout
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        ) : (
+                            <Link
+                                to="/login"
+                                className="btn btn-secondary flex items-center gap-2 transition all duration-500 ">
+                                <FaUserFriends />
+                                Join Us
+                            </Link>
+                        )}
                     </div>
 
                     {/* Right: Burger Icon for Mobile */}
@@ -143,12 +191,28 @@ const Navbar = () => {
                             </NavLink>
                         </li>
                         <li className="mt-6 border-t pt-4">
-                            <Link
-                                to="/login"
-                                className="text-secondary w-full flex justify-center items-center gap-2 btn">
-                                <FaUserFriends />
-                                Join Us
-                            </Link>
+                            {user ? (
+                                <>
+                                    <Link to="/dashboard" className="btn mb-2">
+                                        Dashboard
+                                    </Link>
+                                    <div className="btn btn-secondary">
+                                        <Link className="flex gap-3">
+                                            <FaSignOutAlt className="text-xl" />
+                                            <button onClick={handleLogout}>
+                                                Logout
+                                            </button>
+                                        </Link>
+                                    </div>
+                                </>
+                            ) : (
+                                <Link
+                                    to="/login"
+                                    className="text-secondary w-full flex justify-center items-center gap-2 btn">
+                                    <FaUserFriends />
+                                    Join Us
+                                </Link>
+                            )}
                         </li>
                     </ul>
                 </div>

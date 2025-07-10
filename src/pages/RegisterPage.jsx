@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
 import registerAnim from "../assets/lottie/register.json";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import axios from "axios";
 import {
     FaEnvelope,
     FaLock,
@@ -12,13 +13,117 @@ import {
     FaGoogle,
 } from "react-icons/fa";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Spinner from "../components/Spinner/Spinner";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
+
+const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 const RegisterPage = () => {
+    const {
+        createUser,
+        updateUser,
+        setUser,
+        user,
+        loading,
+        setLoading,
+        googleLogin,
+    } = useAuth();
+    const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
-
+    const [formLoading, setFormLoading] = useState(false);
     const togglePassword = () => setShowPassword((prev) => !prev);
     const toggleConfirm = () => setShowConfirm((prev) => !prev);
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm();
+
+    const password = watch("password");
+
+    const handleGoogleLogin = async () => {
+        try {
+            await googleLogin();
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User logged in succesfully",
+                showConfirmButton: false,
+                timer: 1200,
+            });
+
+            navigate("/");
+        } catch (err) {
+            console.error("Google Login failed:", err);
+        }
+    };
+
+    const onSubmit = async (data) => {
+        setFormLoading(true);
+        const { name, email, password, image } = data;
+
+        try {
+            setLoading(true);
+            const formData = new FormData();
+            formData.append("file", image[0]);
+            formData.append("upload_preset", uploadPreset);
+
+            const response = await axios.post(
+                `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+                formData
+            );
+
+            const imageURL = response.data.secure_url;
+
+            const result = await createUser(email, password);
+            await updateUser({
+                displayName: name,
+                photoURL: imageURL,
+            });
+            setUser(result.user);
+            setLoading(false);
+            await Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User registered successfully",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            navigate("/");
+        } catch (err) {
+            if (err.message == "Firebase: Error (auth/invalid-email).") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Must enter a valid email",
+                });
+            } else if (
+                err.message == "Firebase: Error (auth/email-already-in-use)."
+            ) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Email already in use",
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong",
+                });
+            }
+            console.error(err);
+        } finally {
+            setFormLoading(false);
+        }
+    };
+    if (formLoading) return <Spinner />;
 
     return (
         <motion.div
@@ -38,7 +143,9 @@ const RegisterPage = () => {
                     Create an account
                 </h2>
 
-                <form className="space-y-3 sm:space-y-4 text-sm sm:text-base">
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="space-y-3 sm:space-y-4 text-sm sm:text-base">
                     {/* Name */}
                     <label className="border p-2 rounded flex items-center gap-2 w-full">
                         <FaUser />
@@ -46,9 +153,12 @@ const RegisterPage = () => {
                             type="text"
                             className="grow outline-none bg-transparent"
                             placeholder="Full Name"
-                            required
+                            {...register("name", { required: true })}
                         />
                     </label>
+                    {errors.name && (
+                        <p className="text-red-500 text-xs">Name is required</p>
+                    )}
 
                     {/* Email */}
                     <label className="border p-2 rounded flex items-center gap-2 w-full">
@@ -59,9 +169,12 @@ const RegisterPage = () => {
                             autoComplete="email"
                             className="grow outline-none bg-transparent"
                             placeholder="Email"
-                            required
+                            {...register("email", { required: true })}
                         />
                     </label>
+                    {errors.email && (
+                        <p className="text-red-500 text-xs">Email is required</p>
+                    )}
 
                     {/* Profile Picture */}
                     <label className="border p-2 rounded flex items-center gap-2 w-full cursor-pointer">
@@ -73,8 +186,12 @@ const RegisterPage = () => {
                             accept="image/*"
                             name="profile"
                             className="grow outline-none bg-transparent text-xs sm:text-sm file:mr-2 file:py-1 file:px-2 file:border-0 cursor-pointer"
+                            {...register("image", { required: true })}
                         />
                     </label>
+                    {errors.image && (
+                        <p className="text-red-500 text-xs">Profile image required</p>
+                    )}
 
                     {/* Password */}
                     <label className="border p-2 rounded flex items-center gap-2 w-full">
@@ -83,7 +200,15 @@ const RegisterPage = () => {
                             type={showPassword ? "text" : "password"}
                             className="grow outline-none bg-transparent"
                             placeholder="Password"
-                            required
+                            {...register("password", {
+                                required: "Password is required",
+                                minLength: 6,
+                                validate: {
+                                    hasUpperCase: (value) =>
+                                        /[A-Z]/.test(value) ||
+                                        "Password must contain  at least one uppercase",
+                                },
+                            })}
                         />
                         <button
                             type="button"
@@ -93,6 +218,11 @@ const RegisterPage = () => {
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </label>
+                    {errors.password && (
+                        <p className="text-red-500 text-xs">
+                            {errors.password.message}
+                        </p>
+                    )}
 
                     {/* Confirm Password */}
                     <label className="border p-2 rounded flex items-center gap-2 w-full">
@@ -101,7 +231,15 @@ const RegisterPage = () => {
                             type={showConfirm ? "text" : "password"}
                             className="grow outline-none bg-transparent"
                             placeholder="Confirm Password"
-                            required
+                            {...register("confirmPassword", {
+                                required: "Confirm your password",
+                                validate: (value) => {
+                                    return (
+                                        value === watch("password") ||
+                                        "Passwords do not match"
+                                    );
+                                },
+                            })}
                         />
                         <button
                             type="button"
@@ -111,15 +249,29 @@ const RegisterPage = () => {
                             {showConfirm ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </label>
+                    {errors.confirmPassword && (
+                        <p className="text-red-500 text-xs">
+                            {errors.confirmPassword.message}
+                        </p>
+                    )}
 
-                    <button className="btn btn-primary w-full flex items-center justify-center gap-2 mt-2 text-sm sm:text-base">
-                        Register
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="btn btn-primary w-full flex items-center justify-center mt-2 text-sm sm:text-base">
+                        {loading ? (
+                            <>
+                                <Spinner />
+                            </>
+                        ) : (
+                            "Register"
+                        )}
                     </button>
                 </form>
 
                 <div className="divider text-xs sm:text-sm">OR</div>
 
-                <button
+                <button onClick={handleGoogleLogin}
                     type="button"
                     className="btn btn-outline w-full flex items-center justify-center gap-2 text-xs sm:text-sm">
                     <FaGoogle />

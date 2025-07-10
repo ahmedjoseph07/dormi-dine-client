@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
 import loginAnim from "../assets/lottie/login.json"; // ✅ Use a different lottie
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import {
     FaEnvelope,
     FaLock,
@@ -10,11 +10,78 @@ import {
     FaGoogle,
 } from "react-icons/fa";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
+import Spinner from "../components/Spinner/Spinner";
 
 const LoginPage = () => {
+    const navigate = useNavigate();
+    const { setUser, loading, setLoading, login, googleLogin } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
-
     const togglePassword = () => setShowPassword((prev) => !prev);
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    if (loading) return <Spinner />;
+
+    const handleGoogleLogin = async () => {
+        try {
+            await googleLogin();
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User logged in succesfully",
+                showConfirmButton: false,
+                timer: 1200,
+            });
+
+            navigate("/");
+        } catch (err) {
+            console.error("Google Login failed:", err);
+        }
+    };
+
+    const onSubmit = async (data) => {
+        const { email, password } = data;
+        try {
+            setLoading(true);
+            const result = await login(email, password);
+            setUser(result.user);
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User logged in succesfully",
+                showConfirmButton: false,
+                timer: 1200,
+            });
+            navigate("/");
+        } catch (err) {
+            if (err.message == "Firebase: Error (auth/invalid-credential).") {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: "Invalid Credentials",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            } else {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "error",
+                    title: err.message,
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <motion.div
@@ -34,7 +101,9 @@ const LoginPage = () => {
                     Welcome Back
                 </h2>
 
-                <form className="space-y-3 sm:space-y-4 text-sm sm:text-base">
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="space-y-3 sm:space-y-4 text-sm sm:text-base">
                     {/* Email */}
                     <label className="border p-2 rounded flex items-center gap-2 w-full">
                         <FaEnvelope />
@@ -44,9 +113,20 @@ const LoginPage = () => {
                             autoComplete="email"
                             className="grow outline-none bg-transparent"
                             placeholder="Email"
-                            required
+                            {...register("email", {
+                                required: "Email is required",
+                                pattern: {
+                                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                    message: "Invalid email address",
+                                },
+                            })}
                         />
                     </label>
+                    {errors.password && (
+                        <p className="text-red-500 text-xs">
+                            {errors.email.message}
+                        </p>
+                    )}
 
                     {/* Password */}
                     <label className="border p-2 rounded flex items-center gap-2 w-full">
@@ -55,7 +135,14 @@ const LoginPage = () => {
                             type={showPassword ? "text" : "password"}
                             className="grow outline-none bg-transparent"
                             placeholder="Password"
-                            required
+                            {...register("password", {
+                                required: "Password is required",
+                                minLength: {
+                                    value: 6,
+                                    message:
+                                        "Password must be at least 6 characters",
+                                },
+                            })}
                         />
                         <button
                             type="button"
@@ -66,6 +153,12 @@ const LoginPage = () => {
                         </button>
                     </label>
 
+                    {errors.password && (
+                        <p className="text-red-500 text-xs">
+                            {errors.password.message}
+                        </p>
+                    )}
+
                     <button className="btn btn-primary w-full flex items-center justify-center gap-2 mt-2 text-sm sm:text-base">
                         Login
                     </button>
@@ -74,6 +167,7 @@ const LoginPage = () => {
                 <div className="divider text-xs sm:text-sm">OR</div>
 
                 <button
+                    onClick={handleGoogleLogin}
                     type="button"
                     className="btn btn-outline w-full flex items-center justify-center gap-2 text-xs sm:text-sm">
                     <FaGoogle />

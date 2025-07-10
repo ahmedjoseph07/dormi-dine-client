@@ -6,10 +6,11 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router";
 import logo from "../../assets/logo.png";
+import { MdSubscriptions } from "react-icons/md";
 
 const Footer = () => {
     return (
-        <div className="bg-base-100 pt-10 px-4">
+        <div className="bg-base-200 pt-10 px-4 shadow-xl">
             <footer className="w-11/12 md:w-10/12 mx-auto">
                 <div className=" mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 pb-10">
                     {/* Brand & Socials */}
@@ -84,17 +85,17 @@ const Footer = () => {
                         <p className="text-sm text-neutral">
                             Stay updated with our latest features and updates.
                         </p>
-                        <form className="flex flex-col sm:flex-row w-full gap-2">
+                        <form className="flex flex-col xl:flex-row w-full gap-2">
                             <input
                                 type="email"
                                 placeholder="Enter your email"
-                                className="outline-0 border border-dashed py-2 px-4 w-full sm:rounded-l-lg rounded-lg"
+                                className="outline-0 border border-dashed py-2 px-4 w-full  sm:rounded-l-lg rounded-lg"
                                 required
                             />
                             <button
                                 type="submit"
                                 className="btn btn-secondary w-full sm:w-auto sm:rounded-r-lg rounded-lg">
-                                Subscribe
+                                <MdSubscriptions className="text-xl" />Subscribe
                             </button>
                         </form>
                     </div>
