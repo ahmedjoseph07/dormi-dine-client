@@ -11,9 +11,8 @@ import { MdSubscriptions } from "react-icons/md";
 const Footer = () => {
     return (
         <div className="bg-base-200 pt-10 px-4 shadow-xl">
-            <footer className="w-11/12 md:w-10/12 mx-auto">
+            <footer className="max-w-7xl mx-auto">
                 <div className=" mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 pb-10">
-                    {/* Brand & Socials */}
                     <div className="flex flex-col gap-4">
                         <Link to="/" className="flex items-center gap-2">
                             <img

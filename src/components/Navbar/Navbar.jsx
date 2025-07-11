@@ -24,7 +24,7 @@ const Navbar = () => {
 
     return (
         <div className="bg-base-200 shadow-xl">
-            <div className="drawer z-50 top-0 w-11/12 md:w-10/12 mx-auto">
+            <div className="drawer z-50 top-0 max-w-7xl mx-auto">
                 <input
                     id="nav-drawer"
                     type="checkbox"
