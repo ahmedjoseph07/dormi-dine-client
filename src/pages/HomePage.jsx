@@ -1,10 +1,10 @@
 import React from 'react';
-import Spinner from '../components/Spinner/Spinner';
+import Banner from '../components/Banner/Banner';
 
 const HomePage = () => {
     return (
         <div>
-            Homepage
+            <Banner/>
         </div>
     )
 };
