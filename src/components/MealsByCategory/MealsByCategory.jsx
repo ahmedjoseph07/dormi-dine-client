@@ -109,11 +109,15 @@ const MealsByCategory = () => {
                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }} 
-                        transition={{ duration: .6 }}>
-                        {mealsByCategory[selectedTab].map((meal) => (
-                            <div
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.6 }}>
+                        {mealsByCategory[selectedTab].map((meal,i) => (
+                            <motion.div
                                 key={meal._id}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.2 }}
                                 className="card cursor-pointer bg-base-100  hover:shadow-xl rounded-xl shadow-xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
                                 <figure>
                                     <img
@@ -143,7 +147,7 @@ const MealsByCategory = () => {
                                         </Link>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </motion.div>
                 </AnimatePresence>

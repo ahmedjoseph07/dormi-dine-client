@@ -53,7 +53,6 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* Navigation Links */}
                     <div className="flex flex-col gap-2">
                         <h3 className="text-lg font-semibold">Quick Links</h3>
                         <Link
@@ -62,19 +61,14 @@ const Footer = () => {
                             Home
                         </Link>
                         <Link
-                            to="/meals"
+                            to="/about"
                             className="hover:underline hover:text-primary">
-                            Meals
+                            About Us
                         </Link>
                         <Link
-                            to="/upcoming-meal"
+                            to="/contact-us"
                             className="hover:underline hover:text-primary">
-                            Upcoming
-                        </Link>
-                        <Link
-                            to="/login"
-                            className="hover:underline hover:text-primary">
-                            Login
+                            Contact Us
                         </Link>
                     </div>
 

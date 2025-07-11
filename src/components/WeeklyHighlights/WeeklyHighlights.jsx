@@ -29,10 +29,10 @@ const WeeklyHighlights = () => {
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={highlights[index].day}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            transition={{ duration: 0.4 }}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: .4 }}
                             className="bg-base-100 px-6 py-8 rounded-2xl shadow-xl hover:shadow-primary/30">
                             <h3 className="text-xl font-bold text-neutral mb-2">
                                 {highlights[index].day}

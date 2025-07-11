@@ -4,6 +4,7 @@ import MealsByCategory from '../components/MealsByCategory/MealsByCategory';
 import MemberPerks from '../components/MemberPerks/MemberPerks';
 import WeeklyHighlights from '../components/WeeklyHighlights/WeeklyHighlights';
 import Membership from '../components/Membership/Membership';
+import TestimonialSlider from '../components/TestimonialSlider/TestimonialSlider';
 
 const HomePage = () => {
     return (
@@ -13,6 +14,7 @@ const HomePage = () => {
             <MemberPerks/>
             <WeeklyHighlights/>
             <Membership/>
+            <TestimonialSlider/>
         </div>
     )
 };
