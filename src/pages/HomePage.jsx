@@ -3,6 +3,7 @@ import Banner from '../components/Banner/Banner';
 import MealsByCategory from '../components/MealsByCategory/MealsByCategory';
 import MemberPerks from '../components/MemberPerks/MemberPerks';
 import WeeklyHighlights from '../components/WeeklyHighlights/WeeklyHighlights';
+import Membership from '../components/Membership/Membership';
 
 const HomePage = () => {
     return (
@@ -11,6 +12,7 @@ const HomePage = () => {
             <MealsByCategory/>
             <MemberPerks/>
             <WeeklyHighlights/>
+            <Membership/>
         </div>
     )
 };

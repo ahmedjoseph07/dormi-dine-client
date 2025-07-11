@@ -24,7 +24,7 @@ const MemberPerks = () => {
         <div className="bg-base-200 ">
             <div className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
                 <h2 className="text-3xl font-bold text-center text-primary mb-10">
-                    Why Join DormiDine?
+                    Why Join Dormi<span className="text-neutral">Dine</span> ?
                 </h2>
                 <p className="text-center text-accent max-w-xl mx-auto mb-12">
                     Unlock powerful features built just for boarders. Sign in to

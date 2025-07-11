@@ -19,33 +19,35 @@ const WeeklyHighlights = () => {
     };
 
     return (
-        <div className="bg-base-200 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-primary mb-8">
-                Dormi Weekly Highlights
-            </h2>
+        <div className="bg-base-200 py-16 px-4 sm:px-6 lg:px-8 text-center">
+            <div className="max-w-7xl mx-auto">
+                <h2 className="text-3xl font-bold text-primary mb-8">
+                    Dormi Weekly Highlights
+                </h2>
 
-            <div className="max-w-xl mx-auto">
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={highlights[index].day}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.4 }}
-                        className="bg-base-100 px-6 py-8 rounded-2xl shadow-xl hover:shadow-primary/30">
-                        <h3 className="text-xl font-bold text-neutral mb-2">
-                            {highlights[index].day}
-                        </h3>
-                        <p className="text-accent text-sm">
-                            {highlights[index].message}
-                        </p>
-                        <button
-                            onClick={nextHighlight}
-                            className="btn btn-secondary btn-sm mt-6">
-                            Next Day →
-                        </button>
-                    </motion.div>
-                </AnimatePresence>
+                <div className="max-w-xl mx-auto">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={highlights[index].day}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.4 }}
+                            className="bg-base-100 px-6 py-8 rounded-2xl shadow-xl hover:shadow-primary/30">
+                            <h3 className="text-xl font-bold text-neutral mb-2">
+                                {highlights[index].day}
+                            </h3>
+                            <p className="text-accent text-sm">
+                                {highlights[index].message}
+                            </p>
+                            <button
+                                onClick={nextHighlight}
+                                className="btn btn-secondary btn-sm mt-6">
+                                Next Day →
+                            </button>
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
             </div>
         </div>
     );
