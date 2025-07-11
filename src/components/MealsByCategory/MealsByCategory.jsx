@@ -114,7 +114,7 @@ const MealsByCategory = () => {
                         {mealsByCategory[selectedTab].map((meal) => (
                             <div
                                 key={meal._id}
-                                className="card cursor-pointer bg-base-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
+                                className="card cursor-pointer bg-base-100  hover:shadow-xl rounded-xl shadow-xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-300">
                                 <figure>
                                     <img
                                         src={meal.image}

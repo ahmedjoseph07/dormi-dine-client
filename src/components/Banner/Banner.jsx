@@ -55,7 +55,7 @@ const Banner = () => {
 
                         {/* Stats */}
                         <div className="flex flex-col items-center justify-center gap-6 mt-6 sm:flex-row sm:gap-12">
-                            <div className="cursor-pointer border px-6 py-4 rounded-2xl border-accent shadow-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-accent/50">
+                            <div className="cursor-pointer border px-6 py-4 border-accent transform hover:scale-105  rounded-xl shadow-xl hover:shadow-secondary/30 hover:scale-[1.02] transition-all duration-300">
                                 <p className="text-4xl font-bold text-accent">
                                     <CountUp
                                         end={999}
@@ -69,7 +69,7 @@ const Banner = () => {
                                 </p>
                             </div>
 
-                            <div className="cursor-pointer border px-6 py-4 rounded-2xl border-accent shadow-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-accent/50">
+                            <div className="cursor-pointer border px-6 py-4 border-accent transform hover:scale-105  rounded-xl shadow-xl hover:shadow-secondary/30 hover:scale-[1.02] transition-all duration-300">
                                 <p className="text-4xl font-bold text-accent">
                                     <CountUp
                                         end={350}
