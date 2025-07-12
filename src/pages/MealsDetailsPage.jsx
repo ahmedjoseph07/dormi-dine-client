@@ -38,12 +38,12 @@ const MealDetails = () => {
     return (
         <div className="min-h-screen py-12 px-4 bg-base-200">
             <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: -30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.6 }}
                 className="max-w-5xl hover:shadow-primary/30 mx-auto bg-base-100 rounded-2xl shadow-xl p-6 md:p-10 space-y-6 ">
-                    
+
                 <div className="flex flex-col md:flex-row gap-8">
                     <img
                         src={mealImg}
