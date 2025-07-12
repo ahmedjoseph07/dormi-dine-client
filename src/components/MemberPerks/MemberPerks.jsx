@@ -39,7 +39,7 @@ const MemberPerks = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.2 }}
-                            className="card cursor-pointer bg-base-200 p-6 rounded-xl shadow-xl hover:shadow-secondary/30 hover:scale-[1.02] transition-all duration-300">
+                            className="card cursor-pointer bg-base-100 p-6 rounded-xl shadow-xl hover:shadow-secondary/30 hover:scale-[1.02] transition-all duration-300">
                             <div className="mb-4">{perk.icon}</div>
                             <h3 className="text-xl font-semibold text-neutral mb-2">
                                 {perk.title}

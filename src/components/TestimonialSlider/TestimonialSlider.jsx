@@ -55,7 +55,7 @@ const TestimonialSlider = () => {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -100 }}
                         transition={{ duration: 0.5 }}
-                        className="bg-base-100 p-6 rounded-xl shadow-lg border hover:shadow-xl cursor-pointer hover:shadow-primary/30">
+                        className="bg-base-100 p-6 rounded-xl shadow-lg hover:shadow-xl cursor-pointer hover:shadow-primary/30">
                         <div className="flex justify-center mb-4">
                             <img
                                 src={testimonials[index].image}

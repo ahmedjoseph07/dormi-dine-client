@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { FaSearch, FaStar, FaUtensils, FaClock } from "react-icons/fa";
-import InfiniteScroll from "react-infinite-scroll-component";
+// import InfiniteScroll from "react-infinite-scroll-component";
 import mealImg from "../assets/meal.webp";
-import {Link} from "react-router";
+import { Link } from "react-router";
 import Spinner from "../components/Spinner/Spinner";
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 
 const dummyMeals = new Array(10).fill(null).map((_, i) => ({
     id: i,
@@ -42,7 +42,7 @@ const MealsPage = () => {
 
                     <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                         <select
-                            className="select focus:outline-none focus:ring-0"
+                            className="select cursor-pointer focus:outline-none focus:ring-0"
                             value={selectedCategory}
                             onChange={(e) =>
                                 setSelectedCategory(e.target.value)
@@ -53,7 +53,7 @@ const MealsPage = () => {
                         </select>
 
                         <select
-                            className="select focus:outline-none focus:ring-0"
+                            className="select cursor-pointer focus:outline-none focus:ring-0"
                             value={selectedPrice}
                             onChange={(e) => setSelectedPrice(e.target.value)}>
                             {prices.map((range) => (
@@ -63,17 +63,20 @@ const MealsPage = () => {
                     </div>
                 </div>
 
-                <InfiniteScroll
+                {/* <InfiniteScroll
                     dataLength={dummyMeals.length}
                     next={() => {}}
                     hasMore={true}
                     loader={
                         <p className="text-center mt-4">
-                            <Spinner/>
+                            <Spinner />
                         </p>
-                    }>
+                    }> */}
+                    <h2 className="text-3xl font-bold text-primary mb-8 text-center">
+                        Meals
+                    </h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                        {dummyMeals.map((meal,i) => (
+                        {dummyMeals.map((meal, i) => (
                             <motion.div
                                 key={meal.id}
                                 initial={{ opacity: 0, y: 20 }}
@@ -103,7 +106,9 @@ const MealsPage = () => {
                                             {meal.postTime}
                                         </span>
                                     </div>
-                                    <Link to={`/meal/${meal.id}`} className="btn btn-sm btn-secondary w-full mt-3">
+                                    <Link
+                                        to={`/meal/${meal.id}`}
+                                        className="btn btn-sm btn-secondary w-full mt-3">
                                         <FaUtensils className="mr-1" />
                                         View Details
                                     </Link>
@@ -111,7 +116,7 @@ const MealsPage = () => {
                             </motion.div>
                         ))}
                     </div>
-                </InfiniteScroll>
+                {/* </InfiniteScroll> */}
             </div>
         </div>
     );
