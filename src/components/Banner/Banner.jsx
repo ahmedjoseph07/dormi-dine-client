@@ -2,6 +2,7 @@ import React from "react";
 import CountUp from "react-countup";
 import TypeWriter from "../TypeWriter/TypeWriter";
 import { FiSearch } from "react-icons/fi";
+import {motion} from "framer-motion";
 
 const Banner = () => {
     return (
@@ -54,7 +55,13 @@ const Banner = () => {
                         </form>
 
                         {/* Stats */}
-                        <div className="flex flex-col items-center justify-center gap-6 mt-6 sm:flex-row sm:gap-12">
+                        <motion.div
+                            // key={}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="flex flex-col items-center justify-center gap-6 mt-6 sm:flex-row sm:gap-12">
                             <div className="cursor-pointer border px-6 py-4 border-accent transform hover:scale-105  rounded-xl shadow-xl hover:shadow-secondary/30 hover:scale-[1.02] transition-all duration-300">
                                 <p className="text-4xl font-bold text-accent">
                                     <CountUp
@@ -82,7 +89,7 @@ const Banner = () => {
                                     Residents
                                 </p>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>

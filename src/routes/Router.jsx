@@ -9,6 +9,7 @@ import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import AboutPage from "../pages/AboutPage";
 import ContactsPage from "../pages/ContactsPage";
+import MealDetailsPage from "../pages/MealsDetailsPage";
 
 export const router = createBrowserRouter([
     {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
             {
                 path:"/contact-us",
                 Component: ContactsPage
+            },
+            {
+                path:"/meal/:mealId",
+                Component: MealDetailsPage
             }
         ],
     },
