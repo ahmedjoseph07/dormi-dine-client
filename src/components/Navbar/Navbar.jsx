@@ -82,7 +82,7 @@ const Navbar = () => {
                         </NavLink>
 
                         <NavLink
-                            to="/upcoming-meal"
+                            to="/upcoming-meals"
                             className={({ isActive }) =>
                                 `relative text-neutral duration-200 
                             after:absolute after:top-0 after:left-0
@@ -185,7 +185,7 @@ const Navbar = () => {
                         </li>
                         <li>
                             <NavLink
-                                to="/upcoming-meal"
+                                to="/upcoming-meals"
                                 className="text-neutral hover:text-primary">
                                 Upcoming Meals
                             </NavLink>

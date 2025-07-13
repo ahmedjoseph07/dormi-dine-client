@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router";
 import RootLayout from "../layouts/RootLayout/RootLayout";
 import DashboardLayout from "../layouts/DashboadLayout/DashboardLayout";
 import HomePage from "../pages/HomePage";
-import DashboardHome from "../pages/DashboardHome";
 import MealsPage from "../pages/MealsPage";
 import UpcomingMealsPage from "../pages/UpcomingMealsPage";
 import RegisterPage from "../pages/RegisterPage";
@@ -10,6 +9,11 @@ import LoginPage from "../pages/LoginPage";
 import AboutPage from "../pages/AboutPage";
 import ContactsPage from "../pages/ContactsPage";
 import MealDetailsPage from "../pages/MealsDetailsPage";
+import Hero from "../components/Dashboard/Hero/Hero"
+import Profile from "../components/Dashboard/Profile/Profile";
+import RequestedMeals from "../components/Dashboard/RequestedMeals/RequestedMeals";
+import MyReviews from "../components/Dashboard/MyReviews/MyReviews";
+import PaymentHistory from "../components/Dashboard/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
     {
@@ -25,7 +29,7 @@ export const router = createBrowserRouter([
                 Component: MealsPage,
             },
             {
-                path: "/upcoming-meal",
+                path: "/upcoming-meals",
                 Component: UpcomingMealsPage,
             },
             {
@@ -48,10 +52,6 @@ export const router = createBrowserRouter([
                 path:"/meal/:mealId",
                 Component: MealDetailsPage
             },
-            {
-                path: "/upcoming-meals",
-                Component:  UpcomingMealsPage
-            }
         ],
     },
     {
@@ -59,9 +59,25 @@ export const router = createBrowserRouter([
         Component: DashboardLayout,
         children: [
             {
-                index: true,
-                Component: DashboardHome,
+                index:true,
+                Component: Hero,
             },
+            {
+                path: "profile",
+                Component: Profile
+            },
+            {
+                path: "requested-meals",
+                Component: RequestedMeals
+            },
+            {
+                path: "my-reviews",
+                Component: MyReviews
+            },
+            {
+                path: "payment-history",
+                Component: PaymentHistory
+            }
         ],
     },
 ]);

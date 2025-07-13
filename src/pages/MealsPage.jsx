@@ -78,11 +78,11 @@ const MealsPage = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                         {dummyMeals.map((meal, i) => (
                             <motion.div
-                                key={meal.id}
+                                key={meal.id }
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.2 }}
+                                transition={{ delay: i * 0.1 }}
                                 className="bg-base-100 cursor-pointer rounded-xl transition-all duration-300  hover:scale-[1.02] shadow-xl hover:shadow-primary/20">
                                 <img
                                     src={mealImg}
