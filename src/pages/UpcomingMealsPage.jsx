@@ -1,40 +1,60 @@
 import { FaClock, FaHeart, FaStar, FaRegHeart } from "react-icons/fa";
 import { motion } from "framer-motion";
 import mealImg from "../assets/meal.webp";
+import { useQuery } from "@tanstack/react-query";
+import axiosInstance from "../api/axiosInstance";
 
-const upcomingMeals = [
-    {
-        id: 1,
-        title: "Beef Tehari",
-        distributor: "Hall 2 Kitchen",
-        image: "https://source.unsplash.com/featured/?beef,tehari",
-        time: "Tomorrow at 1:00 PM",
-        rating: 4.2,
-        likes: 68,
-    },
-    {
-        id: 2,
-        title: "Grilled Fish & Rice",
-        distributor: "Hall 4 Kitchen",
-        image: "https://source.unsplash.com/featured/?grilled,fish",
-        time: "Next Sunday at 8:00 PM",
-        rating: 4.8,
-        likes: 94,
-    },
-    {
-        id: 3,
-        title: "Vegetable Pulao",
-        distributor: "Hall 1 Kitchen",
-        image: "https://source.unsplash.com/featured/?vegetable,pulao",
-        time: "Friday at 2:00 PM",
-        rating: 3.9,
-        likes: 32,
-    },
-];
+// const upcomingMeals = [
+//     {
+//         id: 1,
+//         title: "Beef Tehari",
+//         distributor: "Hall 2 Kitchen",
+//         image: "https://source.unsplash.com/featured/?beef,tehari",
+//         time: "Tomorrow at 1:00 PM",
+//         rating: 4.2,
+//         likes: 68,
+//     },
+//     {
+//         id: 2,
+//         title: "Grilled Fish & Rice",
+//         distributor: "Hall 4 Kitchen",
+//         image: "https://source.unsplash.com/featured/?grilled,fish",
+//         time: "Next Sunday at 8:00 PM",
+//         rating: 4.8,
+//         likes: 94,
+//     },
+//     {
+//         id: 3,
+//         title: "Vegetable Pulao",
+//         distributor: "Hall 1 Kitchen",
+//         image: "https://source.unsplash.com/featured/?vegetable,pulao",
+//         time: "Friday at 2:00 PM",
+//         rating: 3.9,
+//         likes: 32,
+//     },
+// ];
 
 const isPremiumUser = true;
 
 const UpcomingMealsPage = () => {
+
+
+    // Data loading : UpcomingMeals
+    const {
+        data: upcomingMeals = [],
+        isLoading,
+        isError,
+    } = useQuery({
+        queryKey: ["upcoming-meals"],
+        queryFn: async () => {
+            const res = await axiosInstance("/upcoming-meals");
+            return res.data;
+        },
+    });
+
+    console.log(upcomingMeals)
+
+
     return (
         <div className="bg-base-200 px-4 py-12">
             <div className="max-w-6xl mx-auto">

@@ -66,7 +66,7 @@ const AddMeal = ({ admin }) => {
                 </label>
 
                 <label className="border p-2 rounded flex items-center gap-2 w-full">
-                    <FaClock />
+                    <FaClock  className="pointer-events-none"/>
                     <input
                         {...register("postTime")}
                         type="datetime-local"
@@ -95,7 +95,7 @@ const AddMeal = ({ admin }) => {
                 <textarea
                     {...register("description")}
                     placeholder="Description"
-                    className="border-1 w-1/2 h-30 p-2 outline-0 rounded col-span-1 sm:col-span-2"
+                    className="border-1 md:w-1/2  h-30 p-2 outline-0 rounded col-span-1 sm:col-span-2"
                 />
 
                 <input

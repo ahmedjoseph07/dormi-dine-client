@@ -31,7 +31,8 @@ const Navbar = () => {
                     className="drawer-toggle"
                 />
                 <div className="drawer-content flex items-center justify-between px-4 py-3">
-                    {/* Left: Brand */}
+
+                    {/*Brand logo*/}
                     <div className="flex items-center justify-center gap-4">
                         <Link to="/" className="flex items-center gap-2">
                             <img
@@ -47,7 +48,7 @@ const Navbar = () => {
                         <ThemeToggleBtn />
                     </div>
 
-                    {/* Middle: Desktop Menu */}
+                    {/*Desktop Menu */}
                     <div className="hidden md:flex gap-6 items-center">
                         <NavLink
                             to="/"
@@ -98,6 +99,7 @@ const Navbar = () => {
                         </NavLink>
                     </div>
 
+                    {/*User Avater Dropdown */}
                     <div className="hidden md:flex justify-center items-center gap-4">
                         <FaBell className="cursor-pointer hover:scale-130 transition all duration-300 " />
                         {user ? (
@@ -105,7 +107,7 @@ const Navbar = () => {
                                 <div
                                     tabIndex={0}
                                     role="button"
-                                    className="btn btn-ghost btn-circle avatar tooltip tooltip-bottom before:text-primary before:bg-neutral before:font-bold"
+                                    className="btn btn-ghost btn-circle avatar tooltip tooltip-right before:text-primary before:bg-neutral before:font-bold"
                                     data-tip={user.displayName || "Profile"}>
                                     <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                         <img src={user.photoURL} />
@@ -115,8 +117,7 @@ const Navbar = () => {
                                     tabIndex={0}
                                     className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content rounded-box w-48">
                                     <li className="text-center btn btn-accent mb-2 font-bold py-2 text-neutral pointer-events-none">
-                                        Username :{" "}
-                                        {user.displayName || "No Name"}
+                                        @{user.displayName || "Username"}
                                     </li>
                                     <Link to="/dashboard" className="btn mb-2">
                                         Dashboard
@@ -140,7 +141,7 @@ const Navbar = () => {
                         )}
                     </div>
 
-                    {/* Right: Burger Icon for Mobile */}
+                    {/*Burger Icon for Mobile */}
                     <div className="md:hidden">
                         <label
                             htmlFor="nav-drawer"
@@ -160,10 +161,10 @@ const Navbar = () => {
                             </svg>
                         </label>
                     </div>
+
                 </div>
 
                 {/* Drawer Side (Mobile Menu) */}
-
                 <div className="drawer-side">
                     <label
                         htmlFor="nav-drawer"
@@ -216,6 +217,7 @@ const Navbar = () => {
                         </li>
                     </ul>
                 </div>
+
             </div>
         </div>
     );

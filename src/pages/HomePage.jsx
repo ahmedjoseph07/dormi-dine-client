@@ -10,6 +10,7 @@ const HomePage = () => {
     return (
         <div>
             <Banner/>
+            
             <MealsByCategory/>
             <MemberPerks/>
             <WeeklyHighlights/>

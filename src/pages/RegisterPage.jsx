@@ -47,6 +47,7 @@ const RegisterPage = () => {
 
     const password = watch("password");
 
+    // Google Login
     const handleGoogleLogin = async () => {
         try {
             await googleLogin();
@@ -64,12 +65,12 @@ const RegisterPage = () => {
         }
     };
 
+    // Form Submit
     const onSubmit = async (data) => {
         setFormLoading(true);
         const { name, email, password, image } = data;
 
         try {
-            setLoading(true);
             const formData = new FormData();
             formData.append("file", image[0]);
             formData.append("upload_preset", uploadPreset);
@@ -87,7 +88,7 @@ const RegisterPage = () => {
                 photoURL: imageURL,
             });
             setUser(result.user);
-            setLoading(false);
+            setFormLoading(false);
             await Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -119,6 +120,7 @@ const RegisterPage = () => {
                 });
             }
             console.error(err);
+            setFormLoading(false);
         } finally {
             setFormLoading(false);
         }
@@ -143,6 +145,7 @@ const RegisterPage = () => {
                     Create an account
                 </h2>
 
+                {/* Register Form */}
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="space-y-3 sm:space-y-4 text-sm sm:text-base">

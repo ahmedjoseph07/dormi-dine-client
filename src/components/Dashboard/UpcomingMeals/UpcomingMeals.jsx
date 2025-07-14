@@ -102,7 +102,7 @@ const UpcomingMeals = () => {
                             <input
                                 type="file"
                                 placeholder="Image URL"
-                                className="file-input file-input-bordered focus:outline-0 focus:border-0"
+                                className="file-input w-full file-input-bordered focus:outline-0 focus:border-0"
                             />
                         </label>
 
