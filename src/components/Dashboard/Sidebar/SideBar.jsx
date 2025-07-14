@@ -4,8 +4,15 @@ import {
     FaHome,
     FaUser,
     FaUtensils,
-    FaCommentAlt,
-    FaMoneyBill,
+    FaCommentDots,
+    FaMoneyCheckAlt,
+    FaUserShield,
+    FaUsersCog,
+    FaPlusCircle,
+    FaClipboardList,
+    FaStar,
+    FaTruck,
+    FaCalendarAlt,
     FaSignOutAlt,
 } from "react-icons/fa";
 import { Link } from "react-router";
@@ -65,12 +72,49 @@ const DashboardSidebar = () => {
                         </li>
                         <li>
                             <Link to="my-reviews">
-                                <FaCommentAlt className="mr-2" /> My Reviews
+                                <FaCommentDots className="mr-2" /> My Reviews
                             </Link>
                         </li>
                         <li>
                             <Link to="payment-history">
-                                <FaMoneyBill className="mr-2" /> Payment History
+                                <FaMoneyCheckAlt className="mr-2" /> Payment
+                                History
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="admin-profile">
+                                <FaUserShield className="mr-2" /> Admin Profile
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="manage-users">
+                                <FaUsersCog className="mr-2" /> Manage Users
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="add-meal">
+                                <FaPlusCircle className="mr-2" /> Add Meal
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="all-meals">
+                                <FaClipboardList className="mr-2" /> All Meals
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="all-reviews">
+                                <FaStar className="mr-2" /> All Reviews
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="serve-meal">
+                                <FaTruck className="mr-2" /> Serve Meal
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="upcoming-meals">
+                                <FaCalendarAlt className="mr-2" /> Upcoming
+                                Meals
                             </Link>
                         </li>
                     </div>

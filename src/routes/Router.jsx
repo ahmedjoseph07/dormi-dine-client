@@ -14,6 +14,13 @@ import Profile from "../components/Dashboard/Profile/Profile";
 import RequestedMeals from "../components/Dashboard/RequestedMeals/RequestedMeals";
 import MyReviews from "../components/Dashboard/MyReviews/MyReviews";
 import PaymentHistory from "../components/Dashboard/PaymentHistory/PaymentHistory";
+import AdminProfile from "../components/Dashboard/AdminProfile/AdminProfile";
+import ManageUsers from "../components/Dashboard/ManageUsers/ManageUsers";
+import AddMeal from "../components/Dashboard/AddMeals/AddMeals";
+import AllMeals from "../components/Dashboard/AllMeals/AllMeals";
+import AllReviews from "../components/Dashboard/AllReviews/AllReviews";
+import UpcomingMeals from "../components/Dashboard/UpcomingMeals/UpcomingMeals";
+import ServeMeal from "../components/Dashboard/ServeMeal/ServeMeal";
 
 export const router = createBrowserRouter([
     {
@@ -77,6 +84,34 @@ export const router = createBrowserRouter([
             {
                 path: "payment-history",
                 Component: PaymentHistory
+            },
+            {
+                path: "admin-profile",
+                Component: AdminProfile
+            },
+            {
+                path: "manage-users",
+                Component: ManageUsers
+            },
+            {
+                path: "add-meal",
+                Component: AddMeal
+            },
+            {
+                path: "all-meals",
+                Component: AllMeals,
+            },
+            {
+                path:"all-reviews",
+                Component:AllReviews,
+            },
+            {
+                path: "serve-meal",
+                Component: ServeMeal,
+            },
+            {
+                path: "upcoming-meals",
+                Component: UpcomingMeals
             }
         ],
     },
