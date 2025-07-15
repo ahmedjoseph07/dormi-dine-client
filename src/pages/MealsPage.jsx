@@ -8,14 +8,6 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../api/axiosInstance";
 
-const dummyMeals = new Array(10).fill(null).map((_, i) => ({
-    id: i,
-    title: `Meal ${i + 1}`,
-    distributor: "CUET Hall 4",
-    rating: (Math.random() * 2 + 3).toFixed(1),
-    postTime: `${i + 1} hours ago`,
-    price: Math.floor(Math.random() * 100 + 50),
-}));
 
 const categories = ["All (Category) ", "Breakfast", "Lunch", "Dinner"];
 const prices = ["All (Price)", "Below 80", "80-120", "Above 120"];

@@ -52,8 +52,6 @@ const UpcomingMealsPage = () => {
         },
     });
 
-    console.log(upcomingMeals)
-
 
     return (
         <div className="bg-base-200 px-4 py-12">

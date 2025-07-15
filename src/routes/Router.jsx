@@ -9,7 +9,7 @@ import LoginPage from "../pages/LoginPage";
 import AboutPage from "../pages/AboutPage";
 import ContactsPage from "../pages/ContactsPage";
 import MealDetailsPage from "../pages/MealsDetailsPage";
-import Hero from "../components/Dashboard/Hero/Hero"
+import Hero from "../components/Dashboard/Hero/Hero";
 import Profile from "../components/Dashboard/Profile/Profile";
 import RequestedMeals from "../components/Dashboard/RequestedMeals/RequestedMeals";
 import MyReviews from "../components/Dashboard/MyReviews/MyReviews";
@@ -21,6 +21,7 @@ import AllMeals from "../components/Dashboard/AllMeals/AllMeals";
 import AllReviews from "../components/Dashboard/AllReviews/AllReviews";
 import UpcomingMeals from "../components/Dashboard/UpcomingMeals/UpcomingMeals";
 import ServeMeal from "../components/Dashboard/ServeMeal/ServeMeal";
+import CheckoutPage from "../pages/CheckoutPage";
 
 export const router = createBrowserRouter([
     {
@@ -48,16 +49,16 @@ export const router = createBrowserRouter([
                 Component: LoginPage,
             },
             {
-                path : "/about",
+                path: "/about",
                 Component: AboutPage,
             },
             {
-                path:"/contact-us",
-                Component: ContactsPage
+                path: "/contact-us",
+                Component: ContactsPage,
             },
             {
-                path:"/meal/:mealId",
-                Component: MealDetailsPage
+                path: "/meal/:mealId",
+                Component: MealDetailsPage,
             },
         ],
     },
@@ -66,44 +67,44 @@ export const router = createBrowserRouter([
         Component: DashboardLayout,
         children: [
             {
-                index:true,
+                index: true,
                 Component: Hero,
             },
             {
                 path: "profile",
-                Component: Profile
+                Component: Profile,
             },
             {
                 path: "requested-meals",
-                Component: RequestedMeals
+                Component: RequestedMeals,
             },
             {
                 path: "my-reviews",
-                Component: MyReviews
+                Component: MyReviews,
             },
             {
                 path: "payment-history",
-                Component: PaymentHistory
+                Component: PaymentHistory,
             },
             {
                 path: "admin-profile",
-                Component: AdminProfile
+                Component: AdminProfile,
             },
             {
                 path: "manage-users",
-                Component: ManageUsers
+                Component: ManageUsers,
             },
             {
                 path: "add-meal",
-                Component: AddMeal
+                Component: AddMeal,
             },
             {
                 path: "all-meals",
                 Component: AllMeals,
             },
             {
-                path:"all-reviews",
-                Component:AllReviews,
+                path: "all-reviews",
+                Component: AllReviews,
             },
             {
                 path: "serve-meal",
@@ -111,8 +112,12 @@ export const router = createBrowserRouter([
             },
             {
                 path: "upcoming-meals",
-                Component: UpcomingMeals
-            }
+                Component: UpcomingMeals,
+            },
         ],
+    },
+    {
+        path: "/checkout/:packageName",
+        element: <CheckoutPage />,
     },
 ]);
