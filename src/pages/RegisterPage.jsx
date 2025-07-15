@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
 import registerAnim from "../assets/lottie/register.json";
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import axios from "axios";
 import {
     FaEnvelope,
@@ -125,7 +125,11 @@ const RegisterPage = () => {
             setFormLoading(false);
         }
     };
+
     if (formLoading) return <Spinner />;
+    if (user) {
+        return <Navigate to="/" />;
+    }
 
     return (
         <motion.div
@@ -176,7 +180,9 @@ const RegisterPage = () => {
                         />
                     </label>
                     {errors.email && (
-                        <p className="text-red-500 text-xs">Email is required</p>
+                        <p className="text-red-500 text-xs">
+                            Email is required
+                        </p>
                     )}
 
                     {/* Profile Picture */}
@@ -193,7 +199,9 @@ const RegisterPage = () => {
                         />
                     </label>
                     {errors.image && (
-                        <p className="text-red-500 text-xs">Profile image required</p>
+                        <p className="text-red-500 text-xs">
+                            Profile image required
+                        </p>
                     )}
 
                     {/* Password */}
@@ -274,7 +282,8 @@ const RegisterPage = () => {
 
                 <div className="divider text-xs sm:text-sm">OR</div>
 
-                <button onClick={handleGoogleLogin}
+                <button
+                    onClick={handleGoogleLogin}
                     type="button"
                     className="btn btn-outline w-full flex items-center justify-center gap-2 text-xs sm:text-sm">
                     <FaGoogle />

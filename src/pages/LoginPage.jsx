@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Player } from "@lottiefiles/react-lottie-player";
 import loginAnim from "../assets/lottie/login.json"; // ✅ Use a different lottie
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useLocation, useNavigate } from "react-router";
 import {
     FaEnvelope,
     FaLock,
@@ -17,17 +17,25 @@ import Spinner from "../components/Spinner/Spinner";
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+
     const { setUser, loading, setLoading, login, googleLogin } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const togglePassword = () => setShowPassword((prev) => !prev);
+
+    const from = location?.state?.from?.pathname || "/";
 
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
+    const { user } = useAuth();
 
     if (loading) return <Spinner />;
+    if (user) {
+        return <Navigate to="/" />;
+    }
 
     const handleGoogleLogin = async () => {
         try {
@@ -40,7 +48,7 @@ const LoginPage = () => {
                 timer: 1200,
             });
 
-            navigate("/");
+            navigate(from, { replace: true });
         } catch (err) {
             console.error("Google Login failed:", err);
         }
@@ -59,7 +67,7 @@ const LoginPage = () => {
                 showConfirmButton: false,
                 timer: 1200,
             });
-            navigate("/");
+            navigate(from, { replace: true });
         } catch (err) {
             if (err.message == "Firebase: Error (auth/invalid-credential).") {
                 Swal.fire({
