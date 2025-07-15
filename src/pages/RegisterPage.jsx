@@ -17,6 +17,7 @@ import { useForm } from "react-hook-form";
 import Spinner from "../components/Spinner/Spinner";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
+import saveUser from "../utils/saveUser";
 
 const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
@@ -50,7 +51,7 @@ const RegisterPage = () => {
     // Google Login
     const handleGoogleLogin = async () => {
         try {
-            await googleLogin();
+            const result = await googleLogin();
             Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -58,7 +59,7 @@ const RegisterPage = () => {
                 showConfirmButton: false,
                 timer: 1200,
             });
-
+            await saveUser(result.user);
             navigate("/");
         } catch (err) {
             console.error("Google Login failed:", err);
@@ -80,6 +81,10 @@ const RegisterPage = () => {
                 formData
             );
 
+            if (!response?.data?.secure_url) {
+                throw new Error("Image upload failed");
+            }
+
             const imageURL = response.data.secure_url;
 
             const result = await createUser(email, password);
@@ -96,6 +101,7 @@ const RegisterPage = () => {
                 showConfirmButton: false,
                 timer: 1500,
             });
+            await saveUser(result.user);
             navigate("/");
         } catch (err) {
             if (err.message == "Firebase: Error (auth/invalid-email).") {
@@ -239,6 +245,7 @@ const RegisterPage = () => {
                     <label className="border p-2 rounded flex items-center gap-2 w-full">
                         <FaLock />
                         <input
+                            autoComplete="new-password"
                             type={showConfirm ? "text" : "password"}
                             className="grow outline-none bg-transparent"
                             placeholder="Confirm Password"
@@ -270,13 +277,7 @@ const RegisterPage = () => {
                         type="submit"
                         disabled={loading}
                         className="btn btn-primary w-full flex items-center justify-center mt-2 text-sm sm:text-base">
-                        {loading ? (
-                            <>
-                                <Spinner />
-                            </>
-                        ) : (
-                            "Register"
-                        )}
+                        {loading ? <>Registering...</> : "Register"}
                     </button>
                 </form>
 

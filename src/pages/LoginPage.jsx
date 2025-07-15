@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
 import Spinner from "../components/Spinner/Spinner";
+import saveUser from "../utils/saveUser";
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ const LoginPage = () => {
 
     const handleGoogleLogin = async () => {
         try {
-            await googleLogin();
+            const result = await googleLogin();
             Swal.fire({
                 position: "top-end",
                 icon: "success",
@@ -47,7 +48,7 @@ const LoginPage = () => {
                 showConfirmButton: false,
                 timer: 1200,
             });
-
+            await saveUser(result.user);
             navigate(from, { replace: true });
         } catch (err) {
             console.error("Google Login failed:", err);
@@ -67,6 +68,7 @@ const LoginPage = () => {
                 showConfirmButton: false,
                 timer: 1200,
             });
+            await saveUser(result.user);
             navigate(from, { replace: true });
         } catch (err) {
             if (err.message == "Firebase: Error (auth/invalid-credential).") {
