@@ -71,7 +71,7 @@ const LoginPage = () => {
             await saveUser(result.user);
             navigate(from, { replace: true });
         } catch (err) {
-            if (err.message == "Firebase: Error (auth/invalid-credential).") {
+            if (err?.message == "Firebase: Error (auth/invalid-credential).") {
                 Swal.fire({
                     position: "top-end",
                     icon: "error",

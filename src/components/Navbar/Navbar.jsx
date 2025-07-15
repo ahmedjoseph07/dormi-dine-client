@@ -6,9 +6,11 @@ import { FaBell } from "react-icons/fa6";
 import ThemeToggleBtn from "../ThemeButton/ThemeToggleBtn";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
+    const {role} = useRole();
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -108,7 +110,7 @@ const Navbar = () => {
                                     tabIndex={0}
                                     role="button"
                                     className="btn btn-ghost btn-circle avatar tooltip tooltip-right before:text-primary before:bg-neutral before:font-bold"
-                                    data-tip={user.displayName || "Profile"}>
+                                    data-tip={ role.toUpperCase() || "Profile"}>
                                     <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                         <img src={user.photoURL} />
                                     </div>

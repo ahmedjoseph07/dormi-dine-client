@@ -15,12 +15,36 @@ import {
     FaCalendarAlt,
     FaSignOutAlt,
 } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import useRole from "../../../hooks/useRole";
+import useAuth from "../../../hooks/useAuth";
+import Swal from "sweetalert2";
+import Spinner from "../../Spinner/Spinner";
 
 const DashboardSidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
-
+    const { role, isRoleLoading } = useRole();
     const toggleDrawer = () => setIsOpen(!isOpen);
+    const { user,logOut,loading,setLoading } = useAuth();
+    const navigate = useNavigate();
+
+    if (isRoleLoading) return <Spinner />;
+    const handleLogout = async () => {
+        try {
+            if(user === null) return <Spinner/>
+            navigate("/")
+            await logOut();
+            Swal.fire({
+                    position: "top-end",
+                    icon: "warning",
+                    title: "User logged out successfully",
+                    showConfirmButton: false,
+                    timer: 1200,
+                })
+        } catch (err) {
+            console.error("Logout failed:", err);
+        }
+    };
 
     return (
         <div className="drawer lg:drawer-open">
@@ -59,64 +83,76 @@ const DashboardSidebar = () => {
                             className="text-2xl font-bold text-primary">
                             Dashboard
                         </Link>
-
-                        <li>
-                            <Link to="profile">
-                                <FaUser className="mr-2" /> Profile
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="requested-meals">
-                                <FaUtensils className="mr-2" /> Requested Meals
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="my-reviews">
-                                <FaCommentDots className="mr-2" /> My Reviews
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="payment-history">
-                                <FaMoneyCheckAlt className="mr-2" /> Payment
-                                History
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="admin-profile">
-                                <FaUserShield className="mr-2" /> Admin Profile
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="manage-users">
-                                <FaUsersCog className="mr-2" /> Manage Users
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="add-meal">
-                                <FaPlusCircle className="mr-2" /> Add Meal
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="all-meals">
-                                <FaClipboardList className="mr-2" /> All Meals
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="all-reviews">
-                                <FaStar className="mr-2" /> All Reviews
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="serve-meal">
-                                <FaTruck className="mr-2" /> Serve Meal
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="upcoming-meals">
-                                <FaCalendarAlt className="mr-2" /> Upcoming
-                                Meals
-                            </Link>
-                        </li>
+                        {role === "admin" ? (
+                            <>
+                                <li>
+                                    <Link to="admin-profile">
+                                        <FaUserShield className="mr-2" /> Admin
+                                        Profile
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="manage-users">
+                                        <FaUsersCog className="mr-2" /> Manage
+                                        Users
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="add-meal">
+                                        <FaPlusCircle className="mr-2" /> Add
+                                        Meal
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="all-meals">
+                                        <FaClipboardList className="mr-2" /> All
+                                        Meals
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="all-reviews">
+                                        <FaStar className="mr-2" /> All Reviews
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="serve-meal">
+                                        <FaTruck className="mr-2" /> Serve Meal
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="upcoming-meals">
+                                        <FaCalendarAlt className="mr-2" />{" "}
+                                        Upcoming Meals
+                                    </Link>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li>
+                                    <Link to="profile">
+                                        <FaUser className="mr-2" /> Profile
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="requested-meals">
+                                        <FaUtensils className="mr-2" />{" "}
+                                        Requested Meals
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="my-reviews">
+                                        <FaCommentDots className="mr-2" /> My
+                                        Reviews
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="payment-history">
+                                        <FaMoneyCheckAlt className="mr-2" />{" "}
+                                        Payment History
+                                    </Link>
+                                </li>
+                            </>
+                        )}
                     </div>
 
                     {/* Footer: Theme toggle + logout */}
@@ -125,7 +161,9 @@ const DashboardSidebar = () => {
                             <Link to="/" className="btn btn-primary">
                                 <FaHome /> Back to Home
                             </Link>
-                            <button className="btn btn-secondary">
+                            <button
+                                onClick={handleLogout}
+                                className="btn btn-secondary">
                                 <FaSignOutAlt /> Logout
                             </button>
                         </div>

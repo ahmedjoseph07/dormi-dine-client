@@ -23,6 +23,7 @@ import UpcomingMeals from "../components/Dashboard/UpcomingMeals/UpcomingMeals";
 import ServeMeal from "../components/Dashboard/ServeMeal/ServeMeal";
 import CheckoutPage from "../pages/CheckoutPage";
 import PrivateRoute from "../routes/PrivateRoute"
+import AdminRoutes from "./AdminRoutes";
 
 export const router = createBrowserRouter([
     {
@@ -89,31 +90,31 @@ export const router = createBrowserRouter([
             },
             {
                 path: "admin-profile",
-                Component: AdminProfile,
+                element: <AdminRoutes> <AdminProfile/></AdminRoutes>,
             },
             {
                 path: "manage-users",
-                Component: ManageUsers,
+                element: <AdminRoutes><ManageUsers/></AdminRoutes>,
             },
             {
                 path: "add-meal",
-                Component: AddMeal,
+                element: <AdminRoutes><AddMeal/></AdminRoutes>,
             },
             {
                 path: "all-meals",
-                Component: AllMeals,
+                element: <AdminRoutes><AllMeals/></AdminRoutes>,
             },
             {
                 path: "all-reviews",
-                Component: AllReviews,
+                element: <AdminRoutes><AllReviews/></AdminRoutes>,
             },
             {
                 path: "serve-meal",
-                Component: ServeMeal,
+                element: <AdminRoutes><ServeMeal/></AdminRoutes>,
             },
             {
                 path: "upcoming-meals",
-                Component: UpcomingMeals,
+                element: <AdminRoutes><UpcomingMeals/></AdminRoutes>,
             },
         ],
     },
