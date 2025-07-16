@@ -1,7 +1,10 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import axiosInstance from "../../api/axiosInstance";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 const packages = {
     silver: 999,
@@ -15,40 +18,96 @@ const PaymentForm = () => {
     const { packageName } = useParams();
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const { user } = useAuth();
+    const navigate = useNavigate();
 
     const price = packages[packageName.toLocaleLowerCase()] || 999;
+
+    const { data: alreadyPaid = false, isLoading: checkingPayment } = useQuery({
+        queryKey: ["alreadyPaid", user?.email, packageName],
+        queryFn: async () => {
+            const res = await axiosInstance.get(`/api/already-paid`, {
+                params: { email: user?.email, packageName },
+            });
+            return res.data.alreadyPaid;
+        },
+        enabled: !!user?.email && !!packageName,
+    });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!stripe || !elements) return;
-        setLoading(true);
+        
+        if (alreadyPaid) {
+            Swal.fire({
+                icon: "info",
+                title: "Already Purchased",
+                text: `You have already purchased the ${packageName.toUpperCase()} package.`,
+            });
+            return;
+        }
 
+        setLoading(true);
         try {
             // Create Payment Intent
-            const res = await axiosInstance.post("/api/create-payment-intent",{
+            const res = await axiosInstance.post("/api/create-payment-intent", {
                 packageName,
-            })
+            });
 
             const clientSecret = res.data.clientSecret;
 
-            // Confirm Payment 
-            const result = await stripe.confirmCardPayment(clientSecret,{
-                payment_method:{
+            // Confirm Payment
+            const result = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
                     card: elements.getElement(CardElement),
                 },
-            })
+            });
 
-            if(result.error){
+            if (result.error) {
                 setMessage(result.error.message);
-            }else if(result.paymentIntent.status === "succeeded"){
+            } else if (result.paymentIntent.status === "succeeded") {
                 setMessage("Payment successful");
+                // Save Payment to DB
+                await axiosInstance.post("/api/save-payment", {
+                    email: user?.email,
+                    amount: result.paymentIntent.amount / 100,
+                    method: result.paymentIntent.payment_method_types[0],
+                    transactionId: result.paymentIntent.id,
+                    packageName,
+                    status: "Success",
+                });
+                Swal.fire({
+                    icon: "success",
+                    title: "Payment successful",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+                await axiosInstance.patch("/api/update-user-package", {
+                    email: user?.email,
+                    packageName,
+                });
                 //TODO send payment info to DB here;
+                setTimeout(() => {
+                    navigate("/dashboard");
+                }, 1600);
             }
         } catch (err) {
-            setMessage("Something went wrong ",err.message);
+            setMessage("Something went wrong ", err.message);
         }
         setLoading(false);
     };
+
+    if (checkingPayment) return <p>Checking payment status...</p>;
+    if (alreadyPaid) {
+        return (
+            <div className="text-center text-warning mt-10">
+                You have already purchased the{" "}
+                <b>{packageName.toUpperCase()}</b> package.
+            </div>
+        );
+    }
+
+
     return (
         <form
             onSubmit={handleSubmit}
