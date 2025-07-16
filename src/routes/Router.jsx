@@ -59,7 +59,7 @@ export const router = createBrowserRouter([
                 Component: ContactsPage,
             },
             {
-                path: "/meal/:mealId",
+                path: "/meals/:mealId",
                 Component: MealDetailsPage,
             },
         ],

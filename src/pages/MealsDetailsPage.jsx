@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useParams } from "react-router";
 import {
     FaClock,
     FaHeart,
@@ -8,6 +9,9 @@ import {
 } from "react-icons/fa";
 import mealImg from "../assets/meal.webp";
 import ReviewForm from "../components/ReviewForm/ReviewForm";
+import axiosInstance from "../api/axiosInstance";
+import { useQuery } from "@tanstack/react-query";
+import Spinner from "../components/Spinner/Spinner";
 
 const dummyMeal = {
     title: "Chicken Biryani",
@@ -23,17 +27,57 @@ const dummyMeal = {
 };
 
 const MealDetails = () => {
+    const { mealId } = useParams();
+
+    // const {
+    //     title,
+    //     // image,
+    //     distributor,
+    //     description,
+    //     ingredients,
+    //     rating,
+    //     postTime,
+    //     likes,
+    //     reviews,
+    // } = dummyMeal;
+
+    const {
+        data: meal = {},
+        isLoading,
+        isError,
+    } = useQuery({
+        queryKey: ["mealDetails", mealId],
+        queryFn: async () => {
+            const res = await axiosInstance.get(`/api/meals/${mealId}`);
+            return res.data;
+        },
+        enabled: !!mealId,
+    });
+
+    const { data: reviewsList = [], isLoading: isReviewsLoading } = useQuery({
+        queryKey: ["reviews", mealId],
+        queryFn: async () => {
+            const res = await axiosInstance.get(`/api/reviews/${mealId}`);
+            return res.data;
+        },
+        enabled: !!mealId,
+    });
+
+    console.log(meal);
+
+    if (isLoading) return <Spinner />;
+    if (isError)
+        return <p className="text-center text-red-500">Failed to load meal.</p>;
+
     const {
         title,
-        // image,
+        image,
         distributor,
         description,
-        ingredients,
-        rating,
-        postTime,
+        ingredients = [],
+        timestamp,
         likes,
-        reviews,
-    } = dummyMeal;
+    } = meal;
 
     return (
         <div className="min-h-screen py-12 px-4 bg-base-200">
@@ -43,10 +87,9 @@ const MealDetails = () => {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.6 }}
                 className="max-w-5xl hover:shadow-primary/30 mx-auto bg-base-100 rounded-2xl shadow-xl p-6 md:p-10 space-y-6 ">
-
                 <div className="flex flex-col md:flex-row gap-8">
                     <img
-                        src={mealImg}
+                        src={image}
                         alt={title}
                         className="w-full md:w-1/2 rounded-2xl object-cover max-h-96 shadow-lg"
                     />
@@ -60,12 +103,9 @@ const MealDetails = () => {
                         <p className="text-neutral">{description}</p>
                         <div className="flex items-center gap-3 text-sm mt-2 text-neutral">
                             <FaClock />
-                            <span>Posted {postTime}</span>
+                            <span>Posted {new Date( timestamp).toLocaleString()}</span>
                         </div>
                         <div className="flex items-center gap-3 mt-3">
-                            <div className="flex items-center gap-1 text-warning">
-                                <FaStar /> <span>{rating}/5</span>
-                            </div>
                             <div className="flex items-center gap-1 text-error">
                                 <FaHeart /> <span>{likes} Likes</span>
                             </div>
@@ -91,33 +131,34 @@ const MealDetails = () => {
                     </button>
                 </div>
 
+                {/* Review List */}
                 <div className="pt-6 border-t mt-6">
                     <h3 className="text-xl font-bold text-primary mb-4">
-                        Reviews ({reviews})
+                        Reviews ({reviewsList.length})
                     </h3>
 
-                    <div className="mt-6 space-y-4 mb-10">
-                        <div className="bg-base-300 p-4 rounded-lg shadow-sm">
-                            <p className="text-sm text-neutral">
-                                “Tasted amazing, reminds me of home. Great work
-                                by the kitchen team!”
-                            </p>
-                            <p className="text-xs text-accent mt-2">
-                                — Salman, CSE Dept.
-                            </p>
+                    {isReviewsLoading ? (
+                        <Spinner />
+                    ) : reviewsList.length === 0 ? (
+                        <p className="text-md text-accent mb-4">No reviews yet.</p>
+                    ) : (
+                        <div className="mt-6 space-y-4 mb-10">
+                            {reviewsList.map((review) => (
+                                <div
+                                    key={review._id}
+                                    className="bg-base-300 p-4 rounded-lg shadow-sm">
+                                    <p className="text-sm text-neutral">
+                                        {review.comment}
+                                    </p>
+                                    <p className="text-xs text-accent mt-2">
+                                        @{review.name} | Rating:⭐ {review.rating}/5
+                                    </p>
+                                </div>
+                            ))}
                         </div>
-                        <div className="bg-base-300 p-4 rounded-lg shadow-sm">
-                            <p className="text-sm text-neutral">
-                                “Needs a bit more spice but overall very
-                                satisfying meal.”
-                            </p>
-                            <p className="text-xs text-accent mt-2">
-                                — Nabila, EEE Dept.
-                            </p>
-                        </div>
-                    </div>
+                    )}
 
-                    <ReviewForm />
+                    <ReviewForm mealId={mealId}/>
                 </div>
             </motion.div>
         </div>

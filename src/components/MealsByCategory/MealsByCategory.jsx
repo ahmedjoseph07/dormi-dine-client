@@ -7,79 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../api/axiosInstance";
 import { useMemo } from "react";
 import Spinner from "../../components/Spinner/Spinner"
-// const mealsByCategory = {
-//     Breakfast: [
-//         {
-//             _id: "1",
-//             title: "Pancakes & Berries",
-//             price: 120,
-//             rating: 4.8,
-//             image: mealImg,
-//         },
-//         {
-//             _id: "2",
-//             title: "Omelette Special",
-//             price: 90,
-//             rating: 4.5,
-//             image: mealImg,
-//         },
-//         {
-//             _id: "3",
-//             title: "Toast & Juice",
-//             price: 80,
-//             rating: 4.3,
-//             image: mealImg,
-//         },
-//     ],
-//     Lunch: [
-//         {
-//             _id: "4",
-//             title: "Grilled Chicken",
-//             price: 180,
-//             rating: 4.7,
-//             image: mealImg,
-//         },
-//         {
-//             _id: "5",
-//             title: "Veggie Rice Bowl",
-//             price: 150,
-//             rating: 4.4,
-//             image: mealImg,
-//         },
-//         {
-//             _id: "6",
-//             title: "Beef Curry",
-//             price: 200,
-//             rating: 4.6,
-//             image: mealImg,
-//         },
-//     ],
-//     Dinner: [
-//         {
-//             _id: "7",
-//             title: "Spaghetti Bolognese",
-//             price: 160,
-//             rating: 4.9,
-//             image: mealImg,
-//         },
-//         {
-//             _id: "8",
-//             title: "Butter Naan with Paneer",
-//             price: 130,
-//             rating: 4.5,
-//             image: mealImg,
-//         },
-//         {
-//             _id: "9",
-//             title: "Fried Rice & Chicken",
-//             price: 170,
-//             rating: 4.6,
-//             image: mealImg,
-//         },
-//     ],
-// };
 
-// mealsByCategory["All Meals"] = Object.values(mealsByCategory).flat();
 
 const MealsByCategory = () => {
     const [selectedTab, setSelectedTab] = useState("Breakfast");
@@ -190,7 +118,7 @@ const MealsByCategory = () => {
                                     </div>
                                     <div className="card-actions mt-4 justify-end">
                                         <Link
-                                            to={`/meal/${meal._id}`}
+                                            to={`/meals/${meal._id}`}
                                             className="btn btn-secondary btn-sm">
                                             Details
                                         </Link>

@@ -114,7 +114,7 @@ const MealsPage = () => {
                                     </span>
                                 </div>
                                 <Link
-                                    to={`/meal/${meal.id}`}
+                                    to={`/meals/${meal._id}`}
                                     className="btn btn-sm btn-secondary w-full mt-3">
                                     <FaUtensils className="mr-1" />
                                     View Details
