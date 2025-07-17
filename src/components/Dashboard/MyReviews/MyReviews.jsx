@@ -32,7 +32,13 @@ const MyReviews = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries(["myReviews"]);
-            Swal.fire("Deleted!", "Your review has been deleted.", "success");
+            Swal.fire({
+                position: "top-end",
+                icon: "warning",
+                title: "Your Review Deleted",
+                showConfirmButton: false,
+                timer: 1500,
+            });
         },
     });
 

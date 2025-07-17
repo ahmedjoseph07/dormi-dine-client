@@ -48,6 +48,7 @@ const MealDetails = () => {
         enabled: !!mealId,
     });
 
+
     const { data: reviewsList = [], isLoading: isReviewsLoading } = useQuery({
         queryKey: ["reviews", mealId],
         queryFn: async () => {
@@ -57,12 +58,16 @@ const MealDetails = () => {
         enabled: !!mealId,
     });
 
+
     const requestMealMutation = useMutation({
-        mutationFn: async () => {
+        mutationFn: async ({likes,reviews,_id}) => {
             const requestedMeal = {
                 title: meal.title,
+                mealId:_id,
                 email: user.email,
                 name: user.displayName || "Anonymous",
+                likes,
+                reviews,
             };
 
             const res = await axiosInstance.post(
@@ -94,22 +99,22 @@ const MealDetails = () => {
     });
 
     const hasLiked = meal?.isLikedBy?.includes(userEmail);
-    console.log(hasLiked);
     const hasRequested = meal?.isRequestedBy?.includes(userEmail);
-    console.log(hasRequested);
 
     if (isLoading) return <Spinner />;
     if (isError)
         return <p className="text-center text-red-500">Failed to load meal.</p>;
 
     const {
+        _id,
         title,
         image,
         distributor,
         description,
         ingredients = [],
-        timestamp,
+        reviews,
         likes,
+        timestamp,
     } = meal;
 
     return (
@@ -170,7 +175,7 @@ const MealDetails = () => {
                     </button>
 
                     <button
-                        onClick={() => requestMealMutation.mutate()}
+                        onClick={() => requestMealMutation.mutate({likes,reviews,_id})}
                         disabled={requestMealMutation.isLoading || hasRequested}
                         className="btn btn-secondary">
                         <FaUtensils />{" "}
