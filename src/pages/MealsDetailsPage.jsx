@@ -6,40 +6,33 @@ import {
     FaStar,
     FaUtensils,
     FaUserAlt,
+    FaRegHeart,
 } from "react-icons/fa";
 import mealImg from "../assets/meal.webp";
 import ReviewForm from "../components/ReviewForm/ReviewForm";
 import axiosInstance from "../api/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../components/Spinner/Spinner";
-
-const dummyMeal = {
-    title: "Chicken Biryani",
-    // image: "https://source.unsplash.com/featured/?biryani",
-    distributor: "Hall 4 Kitchen Staff",
-    description:
-        "Aromatic basmati rice layered with marinated chicken, saffron, and spices. Served with raita and salad.",
-    ingredients: ["Chicken", "Basmati Rice", "Spices", "Yogurt", "Saffron"],
-    rating: 4.5,
-    postTime: "2 hours ago",
-    likes: 123,
-    reviews: 14,
-};
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import useAuth from "../hooks/useAuth";
 
 const MealDetails = () => {
     const { mealId } = useParams();
+    const { user } = useAuth();
+    const queryClient = useQueryClient();
+    const userEmail = user.email;
 
-    // const {
-    //     title,
-    //     // image,
-    //     distributor,
-    //     description,
-    //     ingredients,
-    //     rating,
-    //     postTime,
-    //     likes,
-    //     reviews,
-    // } = dummyMeal;
+    const likeMutation = useMutation({
+        mutationFn: async () => {
+            const res = await axiosInstance.post(`/api/like/${mealId}`, {
+                email: userEmail,
+            });
+            return res.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(["mealDetails", mealId]);
+        },
+    });
 
     const {
         data: meal = {},
@@ -63,7 +56,7 @@ const MealDetails = () => {
         enabled: !!mealId,
     });
 
-    console.log(meal);
+    const hasLiked = meal?.isLikedBy?.includes(userEmail);
 
     if (isLoading) return <Spinner />;
     if (isError)
@@ -103,7 +96,9 @@ const MealDetails = () => {
                         <p className="text-neutral">{description}</p>
                         <div className="flex items-center gap-3 text-sm mt-2 text-neutral">
                             <FaClock />
-                            <span>Posted {new Date( timestamp).toLocaleString()}</span>
+                            <span>
+                                Posted {new Date(timestamp).toLocaleString()}
+                            </span>
                         </div>
                         <div className="flex items-center gap-3 mt-3">
                             <div className="flex items-center gap-1 text-error">
@@ -123,9 +118,17 @@ const MealDetails = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                    <button className="btn btn-primary">
-                        <FaHeart /> Like
+                    <button
+                        className={`btn btn-md flex items-center gap-1 ${
+                            hasLiked ? "btn-error text-white" : "btn-outline"
+                        }`}
+                        title={hasLiked ? "Unlike" : "Like"}
+                        onClick={() => likeMutation.mutate()}>
+                        {hasLiked ? <FaHeart /> : <FaRegHeart />}
+                        <span>{likes}</span>
+                        {hasLiked ? "Liked" : "Like"}
                     </button>
+                    
                     <button className="btn btn-secondary">
                         <FaUtensils /> Request Meal
                     </button>
@@ -140,7 +143,9 @@ const MealDetails = () => {
                     {isReviewsLoading ? (
                         <Spinner />
                     ) : reviewsList.length === 0 ? (
-                        <p className="text-md text-accent mb-4">No reviews yet.</p>
+                        <p className="text-md text-accent mb-4">
+                            No reviews yet.
+                        </p>
                     ) : (
                         <div className="mt-6 space-y-4 mb-10">
                             {reviewsList.map((review) => (
@@ -151,14 +156,15 @@ const MealDetails = () => {
                                         {review.comment}
                                     </p>
                                     <p className="text-xs text-accent mt-2">
-                                        @{review.name} | Rating:⭐ {review.rating}/5
+                                        @{review.name} | Rating:⭐{" "}
+                                        {review.rating}/5
                                     </p>
                                 </div>
                             ))}
                         </div>
                     )}
 
-                    <ReviewForm mealId={mealId}/>
+                    <ReviewForm mealId={mealId} />
                 </div>
             </motion.div>
         </div>

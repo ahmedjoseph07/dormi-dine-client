@@ -110,7 +110,7 @@ const MealsPage = () => {
                                     </span>
                                     <span className="flex items-center gap-1 text-accent">
                                         <FaClock />
-                                        {meal.postTime}
+                                        {new Date(meal.timestamp).toLocaleString()}
                                     </span>
                                 </div>
                                 <Link
