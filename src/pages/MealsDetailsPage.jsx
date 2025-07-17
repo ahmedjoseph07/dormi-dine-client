@@ -15,12 +15,13 @@ import { useQuery } from "@tanstack/react-query";
 import Spinner from "../components/Spinner/Spinner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const MealDetails = () => {
     const { mealId } = useParams();
     const { user } = useAuth();
     const queryClient = useQueryClient();
-    const userEmail = user.email;
+    const userEmail = user?.email;
 
     const likeMutation = useMutation({
         mutationFn: async () => {
@@ -56,7 +57,46 @@ const MealDetails = () => {
         enabled: !!mealId,
     });
 
+    const requestMealMutation = useMutation({
+        mutationFn: async () => {
+            const requestedMeal = {
+                title: meal.title,
+                email: user.email,
+                name: user.displayName || "Anonymous",
+            };
+
+            const res = await axiosInstance.post(
+                "/api/request-meal",
+                requestedMeal
+            );
+            return res.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(["mealDetails", mealId]);
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Meal Requested",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        },
+        onError: (err) => {
+            console.error(err);
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Meal Request Failed",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        },
+    });
+
     const hasLiked = meal?.isLikedBy?.includes(userEmail);
+    console.log(hasLiked);
+    const hasRequested = meal?.isRequestedBy?.includes(userEmail);
+    console.log(hasRequested);
 
     if (isLoading) return <Spinner />;
     if (isError)
@@ -128,9 +168,15 @@ const MealDetails = () => {
                         <span>{likes}</span>
                         {hasLiked ? "Liked" : "Like"}
                     </button>
-                    
-                    <button className="btn btn-secondary">
-                        <FaUtensils /> Request Meal
+
+                    <button
+                        onClick={() => requestMealMutation.mutate()}
+                        disabled={requestMealMutation.isLoading || hasRequested}
+                        className="btn btn-secondary">
+                        <FaUtensils />{" "}
+                        {requestMealMutation.isLoading
+                            ? "Requesting..."
+                            : "Request Meal"}
                     </button>
                 </div>
 
