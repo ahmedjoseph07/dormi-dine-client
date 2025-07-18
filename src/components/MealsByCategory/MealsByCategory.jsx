@@ -21,7 +21,7 @@ const MealsByCategory = () => {
     } = useQuery({
         queryKey: ["meals"],
         queryFn: async () => {
-            const res = await axiosInstance("/meals");
+            const res = await axiosInstance("/api/meals");
             return res.data;
         },
     });

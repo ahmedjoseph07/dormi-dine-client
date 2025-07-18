@@ -8,12 +8,12 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../api/axiosInstance";
 
-
-const categories = ["All (Category) ", "Breakfast", "Lunch", "Dinner"];
-const prices = ["All (Price)", "Below 80", "80-120", "Above 120"];
+const categories = ["All", "Breakfast", "Lunch", "Dinner"];
+const prices = ["All", "Below 80", "80-120", "Above 120"];
 
 const MealsPage = () => {
     const [search, setSearch] = useState("");
+    const [searchInput, setSearchInput] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [selectedPrice, setSelectedPrice] = useState("All");
 
@@ -22,13 +22,35 @@ const MealsPage = () => {
         data: meals = [],
         isLoading,
         isError,
+        refetch,
     } = useQuery({
-        queryKey: ["meals"],
+        queryKey: ["meals", search, selectedCategory, selectedPrice],
         queryFn: async () => {
-            const res = await axiosInstance("/meals");
+            const params = new URLSearchParams();
+
+            if (search) params.append("search", search);
+            if (selectedCategory !== "All")
+                params.append("category", selectedCategory);
+            if (selectedPrice !== "All")
+                params.append("priceRange", selectedPrice);
+            const res = await axiosInstance(`/api/meals?${params.toString()}`);
             return res.data;
         },
     });
+    const handleCategoryChange = (category) => {
+        setSelectedCategory(category);
+        setSearch(""); // reset backend search param
+        setSearchInput(""); // clear input field
+    };
+
+    const handlePriceChange = (price) => {
+        setSelectedPrice(price);
+        setSearch("");
+        setSearchInput("");
+    };
+
+    if (isLoading) return <Spinner />;
+    if (isError) return <p className="text-red-500">Failed to load meals.</p>;
 
     return (
         <div className="min-h-screen bg-base-200 px-4 py-10">
@@ -38,11 +60,13 @@ const MealsPage = () => {
                         <input
                             type="text"
                             placeholder="Search meals..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
                             className="block w-full px-3 text-base font-normal leading-7 border border-accent outline-0 rounded-md"
                         />
-                        <button className="btn btn-primary ml-2">
+                        <button
+                            className="btn btn-primary ml-2"
+                            onClick={() => setSearch(searchInput)}>
                             <FaSearch />
                         </button>
                     </div>
@@ -52,7 +76,7 @@ const MealsPage = () => {
                             className="select cursor-pointer focus:outline-none focus:ring-0"
                             value={selectedCategory}
                             onChange={(e) =>
-                                setSelectedCategory(e.target.value)
+                                handleCategoryChange(e.target.value)
                             }>
                             {categories.map((cat) => (
                                 <option key={cat}>{cat}</option>
@@ -62,7 +86,7 @@ const MealsPage = () => {
                         <select
                             className="select cursor-pointer focus:outline-none focus:ring-0"
                             value={selectedPrice}
-                            onChange={(e) => setSelectedPrice(e.target.value)}>
+                            onChange={(e) => handlePriceChange(e.target.value)}>
                             {prices.map((range) => (
                                 <option key={range}>{range}</option>
                             ))}
@@ -85,7 +109,7 @@ const MealsPage = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                     {meals.map((meal, i) => (
                         <motion.div
-                            key={meal.id}
+                            key={i}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -103,6 +127,9 @@ const MealsPage = () => {
                                 <p className="text-sm text-neutral">
                                     Distributor: {meal.distributor}
                                 </p>
+                                <p className="text-sm text-neutral">
+                                    Price: ${meal.price}
+                                </p>
                                 <div className="flex items-center justify-between text-sm mt-2">
                                     <span className="flex items-center gap-1 text-warning">
                                         <FaStar />
@@ -110,7 +137,9 @@ const MealsPage = () => {
                                     </span>
                                     <span className="flex items-center gap-1 text-accent">
                                         <FaClock />
-                                        {new Date(meal.timestamp).toLocaleString()}
+                                        {new Date(
+                                            meal.timestamp
+                                        ).toLocaleString()}
                                     </span>
                                 </div>
                                 <Link

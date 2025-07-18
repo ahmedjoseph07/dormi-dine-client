@@ -53,6 +53,8 @@ const UpcomingMealsPage = () => {
     });
 
     if (isUpcomingMealsLoading) return <Spinner />;
+    if (isError)
+        return <p className="text-center text-red-500">Failed to upcoming load meal.</p>;
 
     return (
         <div className="bg-base-200 px-4 py-12">
@@ -93,7 +95,7 @@ const UpcomingMealsPage = () => {
                                             <span>{meal.rating}</span>
                                         </div>
                                         <button
-                                        disabled={!isPremiumUser}
+                                            disabled={!isPremiumUser}
                                             className={`btn btn-md flex items-center gap-1 ${
                                                 hasLiked
                                                     ? "btn-error text-white"

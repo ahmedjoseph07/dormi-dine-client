@@ -1,5 +1,5 @@
 import React from "react";
-
+import useAuth from "../../../hooks/useAuth"
 const stats = [
     { label: "New Requests", value: 12 },
     { label: "Notifications", value: 5 },
@@ -8,13 +8,16 @@ const stats = [
 ];
 
 const DashboardHero = () => {
+
+    const {user} = useAuth()
     return (
         <div className="w-full rounded-2xl shadow-lg bg-base-300 bg-opacity-30 backdrop-blur-md border border-base-200 p-8 mb-6 relative overflow-hidden">
             <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between gap-6">
                 <div>
                     <h1 className="text-xl md:text-4xl font-bold mb-2">
                         Welcome back{" "} <br />
-                        <span className="text-primary">Username</span>
+                        <span className="text-primary">@{user.displayName}</span> <br />
+                        <span className="text-secondary">{user.email}</span>
                     </h1>
                     <p className="text-accent max-w-md">
                         Glad to see you again! Here’s a quick snapshot of your

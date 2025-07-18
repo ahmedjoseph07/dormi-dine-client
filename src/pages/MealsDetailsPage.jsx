@@ -35,11 +35,7 @@ const MealDetails = () => {
         },
     });
 
-    const {
-        data: meal = {},
-        isLoading,
-        isError,
-    } = useQuery({
+    const { data: meal = {},isLoading,isError,} = useQuery({
         queryKey: ["mealDetails", mealId],
         queryFn: async () => {
             const res = await axiosInstance.get(`/api/meals/${mealId}`);
@@ -98,8 +94,18 @@ const MealDetails = () => {
         },
     });
 
+    const { data: loggedUser = {}, isLoading: isUserLoading } = useQuery({
+        queryKey: ["logged-user", userEmail],
+        enabled: !!userEmail,
+        queryFn: async () => {
+            const res = await axiosInstance.get(`/api/user?email=${userEmail}`);
+            return res.data;
+        },
+    });
+
     const hasLiked = meal?.isLikedBy?.includes(userEmail);
     const hasRequested = meal?.isRequestedBy?.includes(userEmail);
+    const isPremiumUser = loggedUser.package !== "free";
 
     if (isLoading) return <Spinner />;
     if (isError)
@@ -176,7 +182,7 @@ const MealDetails = () => {
 
                     <button
                         onClick={() => requestMealMutation.mutate({likes,reviews,_id})}
-                        disabled={requestMealMutation.isLoading || hasRequested}
+                        disabled={requestMealMutation.isLoading || hasRequested || !isPremiumUser}
                         className="btn btn-secondary">
                         <FaUtensils />{" "}
                         {requestMealMutation.isLoading
