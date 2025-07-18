@@ -37,6 +37,8 @@ const MealsPage = () => {
             return res.data;
         },
     });
+
+    console.log(meals)
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
         setSearch(""); 
@@ -125,7 +127,7 @@ const MealsPage = () => {
                                     {meal.title}
                                 </h3>
                                 <p className="text-sm text-neutral">
-                                    Distributor: {meal.distributor}
+                                    Meal Distributor: {meal.distributorName}
                                 </p>
                                 <p className="text-sm text-neutral">
                                     Price: ${meal.price}
@@ -138,7 +140,7 @@ const MealsPage = () => {
                                     <span className="flex items-center gap-1 text-accent">
                                         <FaClock />
                                         {new Date(
-                                            meal.timestamp
+                                            meal.postTime
                                         ).toLocaleString()}
                                     </span>
                                 </div>

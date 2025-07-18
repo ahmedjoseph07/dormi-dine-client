@@ -8,7 +8,6 @@ import {
     FaUserAlt,
     FaRegHeart,
 } from "react-icons/fa";
-import mealImg from "../assets/meal.webp";
 import ReviewForm from "../components/ReviewForm/ReviewForm";
 import axiosInstance from "../api/axiosInstance";
 import { useQuery } from "@tanstack/react-query";
@@ -115,12 +114,12 @@ const MealDetails = () => {
         _id,
         title,
         image,
-        distributor,
+        distributorName,
         description,
         ingredients = [],
         reviews,
         likes,
-        timestamp,
+        postTime,
     } = meal;
 
     return (
@@ -142,13 +141,13 @@ const MealDetails = () => {
                             {title}
                         </h2>
                         <div className="flex items-center gap-2 text-sm text-accent">
-                            <FaUserAlt /> <span>{distributor}</span>
+                            <FaUserAlt /> <span>{distributorName}</span>
                         </div>
                         <p className="text-neutral">{description}</p>
                         <div className="flex items-center gap-3 text-sm mt-2 text-neutral">
                             <FaClock />
                             <span>
-                                Posted {new Date(timestamp).toLocaleString()}
+                                Posted at {new Date(postTime).toLocaleString()}
                             </span>
                         </div>
                         <div className="flex items-center gap-3 mt-3">

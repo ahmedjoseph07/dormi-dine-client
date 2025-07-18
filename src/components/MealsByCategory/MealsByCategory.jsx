@@ -33,9 +33,9 @@ const MealsByCategory = () => {
             Dinner: [],
         };
         meals.forEach((meal) => {
-            if (meal.category === "Breakfast") grouped.Breakfast.push(meal);
-            else if (meal.category === "Lunch") grouped.Lunch.push(meal);
-            else if (meal.category === "Dinner") grouped.Dinner.push(meal);
+            if (meal.category === "breakfast") grouped.Breakfast.push(meal);
+            else if (meal.category === "lunch") grouped.Lunch.push(meal);
+            else if (meal.category === "dinner") grouped.Dinner.push(meal);
         });
         grouped["All Meals"] = meals;
             return grouped;
@@ -110,10 +110,10 @@ const MealsByCategory = () => {
                                     <div className="flex items-center justify-between text-accent">
                                         <span className="flex items-center gap-1">
                                             <FaStar className="text-yellow-500" />
-                                            {meal.rating}
+                                            Rating: {meal.rating}
                                         </span>
                                         <span className="font-bold">
-                                            ৳ {meal.price}
+                                            Price: ${meal.price}
                                         </span>
                                     </div>
                                     <div className="card-actions mt-4 justify-end">
