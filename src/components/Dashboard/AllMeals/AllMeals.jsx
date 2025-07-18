@@ -93,8 +93,6 @@ const Meals = () => {
             price: editingMeal.price,
             postTime: editingMeal.postTime,
             description: editingMeal.description,
-            distributor: editingMeal.distributor,
-            email: editingMeal.email,
         };
 
         // handle image upload if new image file exists
@@ -222,7 +220,7 @@ const Meals = () => {
                         <form
                             onSubmit={(e) => {
                                 e.preventDefault();
-                                handleUpdate(); // <-- You must update this to handle all fields
+                                handleUpdate(); 
                             }}
                             className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
                             <label className="border p-2 rounded flex items-center gap-2 w-full">
