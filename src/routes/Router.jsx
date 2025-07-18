@@ -24,11 +24,13 @@ import ServeMeal from "../components/Dashboard/ServeMeal/ServeMeal";
 import CheckoutPage from "../pages/CheckoutPage";
 import PrivateRoute from "../routes/PrivateRoute"
 import AdminRoutes from "./AdminRoutes";
+import ErrorPage from "../pages/ErrorPage";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         Component: RootLayout,
+        errorElement: <ErrorPage/>,
         children: [
             {
                 index: true,
