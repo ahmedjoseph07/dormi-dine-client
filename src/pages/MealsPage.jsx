@@ -39,8 +39,8 @@ const MealsPage = () => {
     });
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
-        setSearch(""); // reset backend search param
-        setSearchInput(""); // clear input field
+        setSearch(""); 
+        setSearchInput(""); 
     };
 
     const handlePriceChange = (price) => {
