@@ -83,7 +83,7 @@ const ManageUsers = () => {
                                 <tr key={i}>
                                     <td>{u.name}</td>
                                     <td>{u.email}</td>
-                                    <td>{u.package || "Free"}</td>
+                                    <td><span className={`badge p-4 ${u.package !== "free" ? "bg-success":""}`}>{u.package.toUpperCase() || "FREE"}</span></td>
                                     <td>
                                         <button
                                             className="btn btn-sm btn-primary"

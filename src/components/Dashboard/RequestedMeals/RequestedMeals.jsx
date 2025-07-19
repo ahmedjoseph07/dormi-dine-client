@@ -55,7 +55,6 @@ const RequestedMeals = () => {
     });
 
     if (isMealLoading) return <Spinner />;
-    // console.log(requestedMeals);
 
     return (
         <div className="w-full rounded-2xl shadow-lg bg-base-300 bg-opacity-30 backdrop-blur-md border border-base-200 p-6 mb-6">
@@ -73,7 +72,7 @@ const RequestedMeals = () => {
                             <tr>
                                 <th>Title</th>
                                 <th>Likes</th>
-                                <th>Review Count</th>
+                                <th>Reviews Count</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -83,10 +82,10 @@ const RequestedMeals = () => {
                                 <tr key={i}>
                                     <td>{meal.title}</td>
                                     <td>{meal.likes}</td>
-                                    <td>{meal.reviews}</td>
+                                    <td>{meal.reviewsCount}</td>
                                     <td>
                                         <span className="badge p-4 flex justify-center items-center">
-                                            {meal.status}
+                                            {meal.status.toUpperCase()}
                                         </span>
                                     </td>
                                     <td>

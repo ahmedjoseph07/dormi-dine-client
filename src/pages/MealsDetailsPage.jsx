@@ -55,14 +55,14 @@ const MealDetails = () => {
 
 
     const requestMealMutation = useMutation({
-        mutationFn: async ({likes,reviews,_id}) => {
+        mutationFn: async ({likes,reviewsCount,_id}) => {
             const requestedMeal = {
                 title: meal.title,
                 mealId:_id,
                 email: user.email,
                 name: user.displayName || "Anonymous",
                 likes,
-                reviews,
+                reviewsCount,
             };
 
             const res = await axiosInstance.post(
@@ -117,7 +117,7 @@ const MealDetails = () => {
         distributorName,
         description,
         ingredients = [],
-        reviews,
+        reviewsCount,
         likes,
         postTime,
     } = meal;
@@ -180,7 +180,7 @@ const MealDetails = () => {
                     </button>
 
                     <button
-                        onClick={() => requestMealMutation.mutate({likes,reviews,_id})}
+                        onClick={() => requestMealMutation.mutate({likes,reviewsCount,_id})}
                         disabled={requestMealMutation.isLoading || hasRequested || !isPremiumUser}
                         className="btn btn-secondary">
                         <FaUtensils />{" "}

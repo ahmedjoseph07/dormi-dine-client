@@ -37,8 +37,7 @@ const MealsPage = () => {
             return res.data;
         },
     });
-
-    console.log(meals)
+    
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
         setSearch(""); 
