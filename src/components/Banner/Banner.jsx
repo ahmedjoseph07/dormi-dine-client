@@ -10,22 +10,26 @@ const Banner = () => {
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const handleSearchSubmit = async (e) => {
-    e.preventDefault();
-    if (!searchText.trim()) return;
+        e.preventDefault();
+        if (!searchText.trim()) return;
 
-    setLoading(true);
-    setError("");
-    try {
-        const { data } = await axiosInstance.get(`/api/meals?search=${searchText}`);
-        setResults(data);
-    } catch (err) {
-        setError("Failed to fetch meals");
-    } finally {
-        setLoading(false);
-    }
-};
+        setLoading(true);
+        setError("");
+        setIsSubmitted(true);
+        try {
+            const { data } = await axiosInstance.get(
+                `/api/meals?search=${searchText}`
+            );
+            setResults(data);
+        } catch (err) {
+            setError("Failed to fetch meals");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="relative bg-base-200">
@@ -55,11 +59,12 @@ const Banner = () => {
                                 <label htmlFor="search" className="sr-only">
                                     Search
                                 </label>
+
                                 <div className="relative">
                                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                         <FiSearch className="text-xl" />
                                     </div>
-
+                                    
                                     <input
                                         type="text"
                                         id="search"
@@ -83,6 +88,17 @@ const Banner = () => {
                                     className="btn btn-secondary w-full sm:w-auto">
                                     <FiSearch className="text-xl" /> Search now
                                 </button>
+                                {isSubmitted && (
+                                        <button
+                                            onClick={() => {
+                                                setResults([]);
+                                                setSearchText("");
+                                                setIsSubmitted(false);
+                                            }}
+                                            className="btn btn-accent w-full sm:w-auto ml-3">
+                                            Clear
+                                        </button>
+                                    )}
                             </div>
                         </form>
 
@@ -134,7 +150,7 @@ const Banner = () => {
                 )}
                 {error && <p className="text-center text-red-500">{error}</p>}
 
-                {!loading && results.length > 0 && (
+                {isSubmitted && !loading && results.length > 0 && (
                     <>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {results.map((meal) => (
@@ -148,23 +164,28 @@ const Banner = () => {
                                         {meal.description}
                                     </p>
                                     <p className="mt-2">
-                                    Posted at : {new Date(meal.postTime).toLocaleString()}
+                                        Posted at :{" "}
+                                        {new Date(
+                                            meal.postTime
+                                        ).toLocaleString()}
                                     </p>
                                     <p className="text-secondary font-bold mt-2">
                                         Price: ${meal.price}
                                     </p>
-                                    
                                 </div>
                             ))}
                         </div>
                     </>
                 )}
 
-                {!loading && results.length === 0 && searchText && (
-                    <p className="text-center text-accent mt-4">
-                        No meals found for "{searchText}".
-                    </p>
-                )}
+                {isSubmitted &&
+                    !loading &&
+                    results.length === 0 &&
+                    searchText && (
+                        <p className="text-center text-accent mt-4">
+                            No meals found for "{searchText}".
+                        </p>
+                    )}
             </div>
         </div>
     );

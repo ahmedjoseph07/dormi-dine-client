@@ -21,6 +21,7 @@ const Profile = () => {
     });
 
     if (isLoading) return <Spinner />;
+    if(isError) return <p className="text-red-500 text-xl">Falied to load data</p>
 
     return (
         <div className="w-full rounded-2xl shadow-lg bg-base-300 bg-opacity-30 backdrop-blur-md border border-base-200 p-6 mb-6">
@@ -46,8 +47,8 @@ const Profile = () => {
                         {new Date(userData.joined).toLocaleDateString()}
                     </p>
                     <div className="flex gap-2 mt-2 flex-wrap flex-col">
-                        <span className="badge badge-ghost font-medium">
-                            {userData.package}
+                        <span className={`badge  ${userData.package !== "free" ? "badge-warning":"badge-ghost" }  p-4 font-medium`}>
+                            {userData.package.toUpperCase()}
                         </span>
                         <button className="btn btn-secondary btn-sm w-full md:w-1/6">
                             Edit Profile

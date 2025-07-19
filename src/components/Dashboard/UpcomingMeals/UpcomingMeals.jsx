@@ -62,6 +62,7 @@ const UpcomingMeals = () => {
     // Publish to meals
     const publishMeal = useMutation({
         mutationFn: async (meal) => {
+            meal
             await axiosInstance.post("/api/meals", meal);
             await axiosInstance.delete(`/api/upcoming-meals/${meal._id}`);
         },
@@ -167,7 +168,7 @@ const UpcomingMeals = () => {
                                 <tr key={meal._id}>
                                     <td>{meal.title}</td>
                                     <td>{meal.category}</td>
-                                    <td>৳{meal.price}</td>
+                                    <td>${meal.price}</td>
                                     <td>{meal.distributorName}</td>
                                     <td>
                                         <button
