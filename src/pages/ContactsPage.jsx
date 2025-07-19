@@ -7,11 +7,11 @@ const ContactPage = () => {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7 }}
-                className=" cursor-pointer max-w-xl mx-auto bg-base-100 p-8 rounded-2xl shadow-lg border hover:shadow-xl hover:shadow-primary/30">
+                className=" cursor-pointer max-w-xl mx-auto bg-base-100 p-8 rounded-2xl shadow-lg hover:shadow-xl hover:shadow-primary/30">
                 <h2 className="text-3xl font-bold text-primary mb-6">
                     Contact Us
                 </h2>
-                <p className="text-neutral mb-4">
+                <p className="text-accent mb-4">
                     Have questions, feedback, or want to get involved? We’d love
                     to hear from you!
                 </p>
@@ -20,15 +20,15 @@ const ContactPage = () => {
                     <input
                         type="text"
                         placeholder="Your Name"
-                        className="border p-3 rounded-lg w-full"
+                        className="border focus:outline-0 p-2 rounded-lg w-full"
                     />
                     <input
                         type="email"
                         placeholder="Your Email"
-                        className="border p-3 rounded-lg w-full"
+                        className="border focus:outline-0 p-2 rounded-lg w-full"
                     />
                     <textarea
-                        className="border p-2 rounded-lg w-full"
+                        className="border focus:outline-0 p-2 rounded-lg w-full"
                         rows="4"
                         placeholder="Your Message"></textarea>
                     <button type="submit" className="btn btn-primary w-full">

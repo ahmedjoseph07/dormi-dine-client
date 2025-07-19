@@ -60,18 +60,24 @@ const AddMeal = () => {
             await axiosInstance.post("/api/meals", meal);
 
             Swal.fire({
+                position:"top-end",
                 icon: "success",
                 title: "Meal Added",
                 text: "Meal was added successfully!",
+                showConfirmButton:false,
+                timer:1500,
             });
 
             reset();
         } catch (error) {
             console.error("Error adding meal:", error);
             Swal.fire({
+                position:"top-end",
                 icon: "error",
                 title: "Oops...",
                 text: "Failed to add meal. Try again.",
+                showConfirmButton:false,
+                timer:1500,
             });
         } finally {
             setLoading(false);
@@ -165,7 +171,7 @@ const AddMeal = () => {
                         {...register("image", { required: true })}
                         type="file"
                         accept="image/*"
-                        className="file-input file-input-bordered w-full"
+                        className="file-input focus:outline-0 border-accent file-input-bordered w-full"
                     />
                 </label>
 

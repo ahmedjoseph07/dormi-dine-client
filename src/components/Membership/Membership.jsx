@@ -1,8 +1,6 @@
 import { Link } from "react-router";
 import { motion } from "framer-motion";
 
-
-
 const packages = [
     {
         name: "Silver",
@@ -30,14 +28,18 @@ const Membership = () => {
             <h2 className="text-3xl font-bold mb-6 text-primary">
                 Upgrade Your Experience
             </h2>
+            <p className="text-center text-accent max-w-xl mx-auto mb-12">
+                Unlock premium features and personalized recommendations. Enjoy smarter planning, quicker meal
+                access.
+            </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                {packages.map(({ name, price, perks, bg,},i) => (
+                {packages.map(({ name, price, perks, bg }, i) => (
                     <motion.div
                         key={name}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: i * .3 }}
+                        transition={{ delay: i * 0.3 }}
                         className={`border rounded-xl p-6 transition-transform hover:scale-105 shadow-xl hover:shadow-secondary/30 cursor-pointer ${bg}`}>
                         <h3 className="text-xl font-bold mb-2">
                             {name} Package

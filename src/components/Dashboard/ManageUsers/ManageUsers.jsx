@@ -79,20 +79,42 @@ const ManageUsers = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map((u, i) => (
-                                <tr key={i}>
-                                    <td>{u.name}</td>
-                                    <td>{u.email}</td>
-                                    <td><span className={`badge p-4 ${u.package !== "free" ? "bg-success":""}`}>{u.package.toUpperCase() || "FREE"}</span></td>
-                                    <td>
-                                        <button
-                                            className="btn btn-sm btn-primary"
-                                            onClick={() => makeAdmin(u.email)}>
-                                            Make Admin
-                                        </button>
+                            {users.length === 0 ? (
+                                <tr>
+                                    <td
+                                        colSpan="4"
+                                        className="py-10 text-center text-accent text-lg">
+                                        No Users Found
                                     </td>
                                 </tr>
-                            ))}
+                            ) : (
+                                users.map((u, i) => (
+                                    <tr key={i}>
+                                        <td>{u.name}</td>
+                                        <td>{u.email}</td>
+                                        <td>
+                                            <span
+                                                className={`badge p-4 ${
+                                                    u.package !== "free"
+                                                        ? "bg-success"
+                                                        : ""
+                                                }`}>
+                                                {u.package.toUpperCase() ||
+                                                    "FREE"}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <button
+                                                className="btn btn-sm btn-primary"
+                                                onClick={() =>
+                                                    makeAdmin(u.email)
+                                                }>
+                                                Make Admin
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>

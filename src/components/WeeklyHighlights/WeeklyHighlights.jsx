@@ -25,6 +25,11 @@ const WeeklyHighlights = () => {
                     Dormi Weekly Highlights
                 </h2>
 
+                <p className="text-center text-accent max-w-xl mx-auto mb-12">
+                    Don’t miss out on our most-loved meals of the week!
+                    Handpicked by your fellow residents and updated weekly.
+                </p>
+
                 <div className="max-w-xl mx-auto">
                     <AnimatePresence mode="wait">
                         <motion.div
@@ -32,7 +37,7 @@ const WeeklyHighlights = () => {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: .4 }}
+                            transition={{ delay: 0.4 }}
                             className="bg-base-100 px-6 py-8 rounded-2xl shadow-xl hover:shadow-primary/30">
                             <h3 className="text-xl font-bold text-neutral mb-2">
                                 {highlights[index].day}

@@ -47,6 +47,11 @@ const TestimonialSlider = () => {
             <h2 className="text-3xl font-bold mb-10 text-primary">
                 What Our Users Say
             </h2>
+            <p className="text-center text-accent max-w-xl mx-auto mb-12">
+                Real stories, real satisfaction. See how DormiDine is
+                transforming hostel life. Your experience matters,
+                and their voices say it best.
+            </p>
             <div className="relative max-w-xl mx-auto">
                 <AnimatePresence mode="wait">
                     <motion.div

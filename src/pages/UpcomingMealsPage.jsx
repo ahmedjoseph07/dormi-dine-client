@@ -54,7 +54,11 @@ const UpcomingMealsPage = () => {
 
     if (isUpcomingMealsLoading) return <Spinner />;
     if (isError)
-        return <p className="text-center text-red-500">Failed to upcoming load meal.</p>;
+        return (
+            <p className="text-center text-red-500">
+                Failed to upcoming load meal.
+            </p>
+        );
 
     return (
         <div className="bg-base-200 px-4 py-12">
@@ -63,64 +67,79 @@ const UpcomingMealsPage = () => {
                     Upcoming Meals
                 </h2>
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-6">
-                    {upcomingMeals.map((meal, i) => {
-                        const hasLiked = meal.isLikedBy?.includes(userEmail);
-                        return (
-                            <motion.div
-                                key={meal._id}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.2 }}
-                                className="rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:scale-[1.02] hover:shadow-secondary/30 transition-all duration-300">
-                                <img
-                                    src={meal.image}
-                                    alt={meal.title}
-                                    className="w-full h-48 object-cover"
-                                />
-                                
-                                <div className="p-5 space-y-2">
-                                    <h3 className="text-xl font-bold text-primary">
-                                        {meal.title}
-                                    </h3>
-                                    <p className="text-sm text-accent">
-                                        {meal.distributorName}
-                                    </p>
-                                    <div className="flex items-center gap-2 text-sm text-neutral">
-                                        <FaClock />
-                                        <span>{new Date(meal.postTime).toLocaleString()}</span>
-                                    </div>
-                                    <div className="flex justify-between items-center mt-4">
-                                        <div className="flex items-center gap-2 text-warning">
-                                            <FaStar />
-                                            <span>{meal.rating}</span>
+                    {upcomingMeals.length === 0 ? (
+                        <div className="col-span-full flex justify-center items-center mt-6">
+                            <p className="text-accent text-xl mx-auto text-center">
+                                No Meals Found
+                            </p>
+                        </div>
+                    ) : (
+                        upcomingMeals.map((meal, i) => {
+                            const hasLiked =
+                                meal.isLikedBy?.includes(userEmail);
+                            return (
+                                <motion.div
+                                    key={meal._id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.2 }}
+                                    className="rounded-2xl shadow-xl overflow-hidden cursor-pointer hover:scale-[1.02] hover:shadow-secondary/30 transition-all duration-300">
+                                    <img
+                                        src={meal.image}
+                                        alt={meal.title}
+                                        className="w-full h-48 object-cover"
+                                    />
+
+                                    <div className="p-5 space-y-2">
+                                        <h3 className="text-xl font-bold text-primary">
+                                            {meal.title}
+                                        </h3>
+                                        <p className="text-sm text-accent">
+                                            {meal.distributorName}
+                                        </p>
+                                        <div className="flex items-center gap-2 text-sm text-neutral">
+                                            <FaClock />
+                                            <span>
+                                                {new Date(
+                                                    meal.postTime
+                                                ).toLocaleString()}
+                                            </span>
                                         </div>
-                                        <button
-                                            disabled={!isPremiumUser}
-                                            className={`btn btn-md flex items-center gap-1 ${
-                                                hasLiked
-                                                    ? "btn-error text-white"
-                                                    : "btn-outline"
-                                            }`}
-                                            title={hasLiked ? "Unlike" : "Like"}
-                                            onClick={() =>
-                                                upcomingLikeMutation.mutate(
-                                                    meal._id
-                                                )
-                                            }>
-                                            {hasLiked ? (
-                                                <FaHeart />
-                                            ) : (
-                                                <FaRegHeart />
-                                            )}
-                                            <span>{meal.likes}</span>
-                                            {hasLiked ? "Liked" : "Like"}
-                                        </button>
+                                        <div className="flex justify-between items-center mt-4">
+                                            <div className="flex items-center gap-2 text-warning">
+                                                <FaStar />
+                                                <span>{meal.rating}</span>
+                                            </div>
+                                            <button
+                                                disabled={!isPremiumUser}
+                                                className={`btn btn-md flex items-center gap-1 ${
+                                                    hasLiked
+                                                        ? "btn-error text-white"
+                                                        : "btn-outline"
+                                                }`}
+                                                title={
+                                                    hasLiked ? "Unlike" : "Like"
+                                                }
+                                                onClick={() =>
+                                                    upcomingLikeMutation.mutate(
+                                                        meal._id
+                                                    )
+                                                }>
+                                                {hasLiked ? (
+                                                    <FaHeart />
+                                                ) : (
+                                                    <FaRegHeart />
+                                                )}
+                                                <span>{meal.likes}</span>
+                                                {hasLiked ? "Liked" : "Like"}
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            </motion.div>
-                        );
-                    })}
+                                </motion.div>
+                            );
+                        })
+                    )}
                 </div>
             </div>
         </div>

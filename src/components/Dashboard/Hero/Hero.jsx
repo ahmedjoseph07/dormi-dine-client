@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import Spinner from "../../Spinner/Spinner";
-import axiosIntance from "../../../api/axiosInstance"
+import axiosIntance from "../../../api/axiosInstance";
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    Tooltip,
+    ResponsiveContainer,
+    CartesianGrid,
+} from "recharts";
+import useRole from "../../../hooks/useRole";
 
-const DashboardHero = () => {
+const Hero = () => {
+    const { role, isRoleLoading, isRoleError } = useRole();
     const { user } = useAuth();
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -18,7 +29,7 @@ const DashboardHero = () => {
                     { label: "💬 Reviews Posted", value: data.reviews },
                     {
                         label: "💵 Total Revenue",
-                        value: `$${(data.revenue).toFixed(2)}`,
+                        value: `$${data.revenue.toFixed(2)}`,
                     },
                 ]);
             } catch (err) {
@@ -32,18 +43,24 @@ const DashboardHero = () => {
     }, []);
 
     if (loading) return <Spinner />;
+    if (isRoleLoading) return <Spinner />;
+    if (isRoleError)
+        return (
+            <p className="text-red-500 text-lg text-center">
+                Error loading role
+            </p>
+        );
 
     return (
         <div className="w-full rounded-2xl shadow-lg bg-base-300 bg-opacity-30 backdrop-blur-md border border-base-200 p-8 mb-6 relative overflow-hidden">
             <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between gap-6">
                 <div>
-                    <h1 className="text-xl md:text-4xl font-bold mb-2">
+                    <h1 className="text-xl md:text-4xl font-extrabold mb-2">
                         Welcome back <br />
-                        <span className="text-primary">
+                        <span className="text-primary text-semibold">
                             @{user.displayName}
                         </span>
                         <br />
-                        <span className="text-secondary">{user.email}</span>
                     </h1>
                     <p className="text-accent max-w-md">
                         Here's a quick overview of your platform's performance
@@ -66,8 +83,39 @@ const DashboardHero = () => {
                     ))}
                 </div>
             </div>
+
+            {/* Performance Chart */}
+            {role === "admin" && (
+                <div className="mt-10">
+                    <h3 className="text-xl font-bold mb-4 text-center text-primary">
+                        Performance Overview
+                    </h3>
+                    <div className="h-72 w-full">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <BarChart
+                                data={stats}
+                                margin={{
+                                    top: 20,
+                                    right: 30,
+                                    left: 0,
+                                    bottom: 5,
+                                }}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="label" />
+                                <YAxis />
+                                <Tooltip />
+                                <Bar
+                                    dataKey="value"
+                                    fill="#4f46e5"
+                                    radius={[4, 4, 0, 0]}
+                                />
+                            </BarChart>
+                        </ResponsiveContainer>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
-export default DashboardHero;
+export default Hero;

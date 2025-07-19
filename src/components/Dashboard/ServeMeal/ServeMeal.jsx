@@ -34,13 +34,18 @@ const ServeMeal = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries(["requested-meals", search]);
-            Swal.fire("Served!", "Meal marked as served.", "success");
+            Swal.fire({
+                title: "Meal Served",
+                text: "Meal Served Succesfully",
+                icon: "success",
+                showCancelButton: false,
+                timer: 1500
+            });
         },
     });
 
     const handleServe = (id) => {
         Swal.fire({
-            position:"top-end",
             title: "Are you sure?",
             text: "Mark this meal as served?",
             icon: "question",
@@ -92,37 +97,45 @@ const ServeMeal = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {requests.map((r) => (
-                                <tr key={r._id}>
-                                    <td>{r.title}</td>
-                                    <td>{r.email}</td>
-                                    <td>{r.name}</td>
-                                    <td>
-                                        <span
-                                            className={`badge p-4 ${
-                                                r.status === "served"
-                                                    ? "badge-success"
-                                                    : "badge-warning"
-                                            }`}>
-                                            {r.status.toUpperCase()}
-                                        </span>
+                            {requests.length === 0 ? (
+                                <tr>
+                                    <td
+                                        colSpan="5"
+                                        className="py-10 text-center text-accent text-lg">
+                                        No Meal Served Yet
                                     </td>
-                                    <td>
-                                        {r.status !== "served" && (
+                                </tr>
+                            ) : (
+                                requests.map((r) => (
+                                    <tr key={r._id}>
+                                        <td>{r.title}</td>
+                                        <td>{r.email}</td>
+                                        <td>{r.name}</td>
+                                        <td>
+                                            <span
+                                                className={`badge p-4 ${
+                                                    r.status === "served"
+                                                        ? "badge-success"
+                                                        : "badge-warning"
+                                                }`}>
+                                                {r.status.toUpperCase()}
+                                            </span>
+                                        </td>
+                                        <td>
                                             <button
                                                 onClick={() =>
                                                     handleServe(r._id)
                                                 }
                                                 disabled={
-                                                    r.status === "cancelled"
+                                                    r.status === "cancelled" || r.status === "served" 
                                                 }
                                                 className="btn btn-sm btn-primary">
                                                 Serve
                                             </button>
-                                        )}
-                                    </td>
-                                </tr>
-                            ))}
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>

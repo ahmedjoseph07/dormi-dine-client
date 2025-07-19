@@ -22,10 +22,9 @@ const Meals = () => {
     const [updatedTitle, setUpdatedTitle] = useState("");
     const [sortBy, setSortBy] = useState("");
 
-
     // Fetch meals
     const { data: meals = [], isLoading } = useQuery({
-        queryKey: ["meals",sortBy],
+        queryKey: ["meals", sortBy],
         queryFn: async () => {
             const res = await axiosInstance.get(`/api/meals?sortBy=${sortBy}`);
             return res.data;
@@ -39,7 +38,13 @@ const Meals = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries(["meals"]);
-            Swal.fire("Deleted!", "The meal has been deleted.", "warning");
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Meal Deleted",
+                text: "Meal Deleted Successfully",
+                showConfirmButton: false,
+            });
         },
     });
 
@@ -86,9 +91,9 @@ const Meals = () => {
             ingredients:
                 typeof editingMeal.ingredients === "string"
                     ? editingMeal.ingredients
-                        .split(",")
-                        .map((ing) => ing.trim())
-                        .filter(Boolean)
+                          .split(",")
+                          .map((ing) => ing.trim())
+                          .filter(Boolean)
                     : editingMeal.ingredients,
             price: editingMeal.price,
             postTime: editingMeal.postTime,
@@ -152,9 +157,9 @@ const Meals = () => {
                 <h2 className="text-2xl font-bold text-primary">Meals</h2>
 
                 <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="select select-bordered cursor-pointer focus:outline-none max-w-xs">
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="select select-bordered cursor-pointer focus:outline-none max-w-xs">
                     <option disabled>Sort by</option>
                     <option value="likes">Likes (High to Low)</option>
                     <option value="reviews">Reviews (High to Low)</option>
@@ -174,37 +179,49 @@ const Meals = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {meals.map((meal, i) => (
-                            <tr key={meal._id}>
-                                <td>{meal.title}</td>
-                                <td>{meal.likes}</td>
-                                <td>{meal.reviewsCount}</td>
-                                <td>{meal.rating}</td>
-                                <td>{meal.distributorName}</td>
-                                <td className="flex flex-wrap gap-2">
-                                    <button
-                                        className="btn btn-sm btn-primary"
-                                        onClick={() => {
-                                            setEditingMeal(meal);
-                                            setUpdatedTitle(meal.title);
-                                        }}>
-                                        Update
-                                    </button>
-                                    <button
-                                        className="btn btn-sm btn-secondary"
-                                        onClick={() => handleDelete(meal._id)}>
-                                        Delete
-                                    </button>
-                                    <button
-                                        className="btn btn-sm btn-accent"
-                                        onClick={() =>
-                                            navigate(`/meals/${meal._id}`)
-                                        }>
-                                        View Meal
-                                    </button>
+                        {meals.length === 0 ? (
+                            <tr>
+                                <td
+                                    colSpan="6"
+                                    className="py-10 text-center text-accent text-lg">
+                                    No Meals Found
                                 </td>
                             </tr>
-                        ))}
+                        ) : (
+                            meals.map((meal, i) => (
+                                <tr key={meal._id}>
+                                    <td>{meal.title}</td>
+                                    <td>{meal.likes}</td>
+                                    <td>{meal.reviewsCount}</td>
+                                    <td>{meal.rating}</td>
+                                    <td>{meal.distributorName}</td>
+                                    <td className="flex flex-wrap gap-2">
+                                        <button
+                                            className="btn btn-sm btn-primary"
+                                            onClick={() => {
+                                                setEditingMeal(meal);
+                                                setUpdatedTitle(meal.title);
+                                            }}>
+                                            Update
+                                        </button>
+                                        <button
+                                            className="btn btn-sm btn-secondary"
+                                            onClick={() =>
+                                                handleDelete(meal._id)
+                                            }>
+                                            Delete
+                                        </button>
+                                        <button
+                                            className="btn btn-sm btn-accent"
+                                            onClick={() =>
+                                                navigate(`/meals/${meal._id}`)
+                                            }>
+                                            View Meal
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
@@ -220,7 +237,7 @@ const Meals = () => {
                         <form
                             onSubmit={(e) => {
                                 e.preventDefault();
-                                handleUpdate(); 
+                                handleUpdate();
                             }}
                             className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm sm:text-base">
                             <label className="border p-2 rounded flex items-center gap-2 w-full">
@@ -348,7 +365,7 @@ const Meals = () => {
                                             newImageFile: e.target.files[0],
                                         })
                                     }
-                                    className="file-input file-input-bordered w-full"
+                                    className="file-input border-accent focus:outline-0 file-input-bordered w-full"
                                 />
                             </label>
 

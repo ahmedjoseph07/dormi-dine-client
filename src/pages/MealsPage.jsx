@@ -37,11 +37,11 @@ const MealsPage = () => {
             return res.data;
         },
     });
-    
+
     const handleCategoryChange = (category) => {
         setSelectedCategory(category);
-        setSearch(""); 
-        setSearchInput(""); 
+        setSearch("");
+        setSearchInput("");
     };
 
     const handlePriceChange = (price) => {
@@ -104,54 +104,62 @@ const MealsPage = () => {
                             <Spinner />
                         </p>
                     }> */}
-                <h2 className="text-3xl font-bold text-primary mb-8 text-center">
+                <h2 className="text-3xl font-bold text-primary mb-8 mt-16 text-center">
                     Meals
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-                    {meals.map((meal, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.1 }}
-                            className="bg-base-100 cursor-pointer rounded-xl transition-all duration-300  hover:scale-[1.02] shadow-xl hover:shadow-primary/20">
-                            <img
-                                src={meal.image}
-                                alt={meal.title}
-                                className="w-full h-48 object-cover rounded-t-xl"
-                            />
-                            <div className="p-4 space-y-2">
-                                <h3 className="text-lg font-bold text-primary">
-                                    {meal.title}
-                                </h3>
-                                <p className="text-sm text-neutral">
-                                    Meal Distributor: {meal.distributorName}
-                                </p>
-                                <p className="text-sm text-neutral">
-                                    Price: ${meal.price}
-                                </p>
-                                <div className="flex items-center justify-between text-sm mt-2">
-                                    <span className="flex items-center gap-1 text-warning">
-                                        <FaStar />
-                                        {meal.rating}
-                                    </span>
-                                    <span className="flex items-center gap-1 text-accent">
-                                        <FaClock />
-                                        {new Date(
-                                            meal.postTime
-                                        ).toLocaleString()}
-                                    </span>
+                    {meals.length === 0 ? (
+                        <div className="col-span-full flex justify-center items-center mt-6">
+                            <p className="text-accent text-xl mx-auto text-center">
+                                No Meals Found
+                            </p>
+                        </div>
+                    ) : (
+                        meals.map((meal, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: i * 0.1 }}
+                                className="bg-base-100 cursor-pointer rounded-xl transition-all duration-300  hover:scale-[1.02] shadow-xl hover:shadow-primary/20">
+                                <img
+                                    src={meal.image}
+                                    alt={meal.title}
+                                    className="w-full h-48 object-cover rounded-t-xl"
+                                />
+                                <div className="p-4 space-y-2">
+                                    <h3 className="text-lg font-bold text-primary">
+                                        {meal.title}
+                                    </h3>
+                                    <p className="text-sm text-neutral">
+                                        Meal Distributor: {meal.distributorName}
+                                    </p>
+                                    <p className="text-sm text-neutral">
+                                        Price: ${meal.price}
+                                    </p>
+                                    <div className="flex items-center justify-between text-sm mt-2">
+                                        <span className="flex items-center gap-1 text-warning">
+                                            <FaStar />
+                                            {meal.rating}
+                                        </span>
+                                        <span className="flex items-center gap-1 text-accent">
+                                            <FaClock />
+                                            {new Date(
+                                                meal.postTime
+                                            ).toLocaleString()}
+                                        </span>
+                                    </div>
+                                    <Link
+                                        to={`/meals/${meal._id}`}
+                                        className="btn btn-sm btn-secondary w-full mt-3">
+                                        <FaUtensils className="mr-1" />
+                                        View Details
+                                    </Link>
                                 </div>
-                                <Link
-                                    to={`/meals/${meal._id}`}
-                                    className="btn btn-sm btn-secondary w-full mt-3">
-                                    <FaUtensils className="mr-1" />
-                                    View Details
-                                </Link>
-                            </div>
-                        </motion.div>
-                    ))}
+                            </motion.div>
+                        ))
+                    )}
                 </div>
                 {/* </InfiniteScroll> */}
             </div>

@@ -71,7 +71,7 @@ const Banner = () => {
                                             if (e.key === "Enter")
                                                 handleSearchSubmit(e);
                                         }}
-                                        placeholder="Search meals, rooms, or services..."
+                                        placeholder="Search for your desired meals"
                                         className="block w-full py-3 pl-10 pr-4 text-base font-normal leading-7 border border-accent outline-0 rounded-md"
                                     />
                                 </div>

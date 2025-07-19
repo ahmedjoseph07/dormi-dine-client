@@ -23,7 +23,14 @@ const AllReviews = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries(["reviews"]);
-            Swal.fire("Deleted!", "Review deleted successfully", "success");
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Review Deleted",
+                text: "Review Deleted Successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
         },
     });
 
@@ -34,6 +41,11 @@ const AllReviews = () => {
             icon: "warning",
             showCancelButton: true,
             confirmButtonText: "Yes, delete it!",
+            customClass: {
+                confirmButton: "btn btn-primary mr-2",
+                cancelButton: "btn btn-secondary",
+            },
+            buttonsStyling: false,
         }).then((result) => {
             if (result.isConfirmed) {
                 deleteReview.mutate(id);
@@ -61,30 +73,43 @@ const AllReviews = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {console.log(reviews)}
-                        {reviews.map((review) => (
-                            <tr key={review._id}>
-                                <td>{review.mealTitle}</td>
-                                <td>{review.likes}</td>
-                                <td>{review.reviewsCount}</td>
-                                <td>{review.rating}</td>
-                                <td>{review.comment}</td>
-                                <td className="flex gap-2 flex-wrap">
-                                    <button
-                                        onClick={() => handleDelete(review._id)}
-                                        className="btn btn-sm btn-secondary">
-                                        Delete
-                                    </button>
-                                    <button
-                                        onClick={() =>
-                                            navigate(`/meals/${review.mealId}`)
-                                        }
-                                        className="btn btn-sm btn-accent">
-                                        View Meal
-                                    </button>
+                        {reviews.length === 0 ? (
+                            <tr>
+                                <td
+                                    colSpan="6"
+                                    className="py-10 text-center text-accent text-lg">
+                                    No Reviews Found
                                 </td>
                             </tr>
-                        ))}
+                        ) : (
+                            reviews.map((review) => (
+                                <tr key={review._id}>
+                                    <td>{review.mealTitle}</td>
+                                    <td>{review.likes}</td>
+                                    <td>{review.reviewsCount}</td>
+                                    <td>{review.rating}</td>
+                                    <td>{review.comment}</td>
+                                    <td className="flex gap-2 flex-wrap">
+                                        <button
+                                            onClick={() =>
+                                                handleDelete(review._id)
+                                            }
+                                            className="btn btn-sm btn-secondary">
+                                            Delete
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                navigate(
+                                                    `/meals/${review.mealId}`
+                                                )
+                                            }
+                                            className="btn btn-sm btn-accent">
+                                            View Meal
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>

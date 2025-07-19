@@ -15,11 +15,10 @@ import {
 } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
 
-
 const UpcomingMeals = () => {
     const queryClient = useQueryClient();
     const [showModal, setShowModal] = useState(false);
-    const {user} = useAuth();
+    const { user } = useAuth();
 
     const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
     const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
@@ -49,7 +48,14 @@ const UpcomingMeals = () => {
             queryClient.invalidateQueries(["upcomingMeals"]);
             setShowModal(false);
             reset();
-            Swal.fire("Added!", "Upcoming meal added.", "success");
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Upcoming Meal Added",
+                text: "Upcoming Meal Added Successfully",
+                showConfirmButton: false,
+                timer: 1500
+            });
         },
     });
 
@@ -61,7 +67,14 @@ const UpcomingMeals = () => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries(["upcomingMeals"]);
-            Swal.fire("Published!", "Meal is now live.", "success");
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Meal Published",
+                text: "Meal is now live.",
+                showConfirmButton: false,
+                timer: 1500
+            });
         },
     });
 
@@ -141,33 +154,43 @@ const UpcomingMeals = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {upcomingMeals.map((meal) => (
-                            <tr key={meal._id}>
-                                <td>{meal.title}</td>
-                                <td>{meal.category}</td>
-                                <td>৳{meal.price}</td>
-                                <td>{meal.distributorName}</td>
-                                <td>
-                                    <button
-                                        className="btn btn-sm btn-accent"
-                                        onClick={() =>
-                                            publishMeal.mutate(meal)
-                                        }>
-                                        Publish
-                                    </button>
+                        {upcomingMeals.length === 0 ? (
+                            <tr>
+                                <td
+                                    colSpan="5"
+                                    className="py-10 text-center text-accent text-lg">
+                                    No Upcoming Meals Found
                                 </td>
                             </tr>
-                        ))}
+                        ) : (
+                            upcomingMeals.map((meal) => (
+                                <tr key={meal._id}>
+                                    <td>{meal.title}</td>
+                                    <td>{meal.category}</td>
+                                    <td>৳{meal.price}</td>
+                                    <td>{meal.distributorName}</td>
+                                    <td>
+                                        <button
+                                            className="btn btn-sm btn-accent"
+                                            onClick={() =>
+                                                publishMeal.mutate(meal)
+                                            }>
+                                            Publish
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
 
             {/* Modal */}
             {showModal && (
-                <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 p-4">
+                <div className="fixed inset-0 bg-opacity-60 flex justify-center items-center z-60 p-4">
                     <div className="bg-base-100 p-6 rounded-2xl shadow-lg border border-base-200 w-full max-w-3xl space-y-4">
                         <h3 className="text-xl font-bold text-primary mb-4">
-                            ➕ Add Upcoming Meal
+                            Add Upcoming Meal
                         </h3>
 
                         <form
@@ -257,7 +280,7 @@ const UpcomingMeals = () => {
                                     {...register("image", { required: true })}
                                     type="file"
                                     accept="image/*"
-                                    className="file-input file-input-bordered w-full"
+                                    className="file-input focus:outline-0 border-accent file-input-bordered w-full"
                                 />
                             </label>
 
