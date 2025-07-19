@@ -21,7 +21,7 @@ const UpcomingMealsPage = () => {
     } = useQuery({
         queryKey: ["upcoming-meals"],
         queryFn: async () => {
-            const res = await axiosInstance("/upcoming-meals");
+            const res = await axiosInstance("/api/upcoming-meals");
             return res.data;
         },
     });
@@ -78,16 +78,17 @@ const UpcomingMealsPage = () => {
                                     alt={meal.title}
                                     className="w-full h-48 object-cover"
                                 />
+                                
                                 <div className="p-5 space-y-2">
                                     <h3 className="text-xl font-bold text-primary">
                                         {meal.title}
                                     </h3>
                                     <p className="text-sm text-accent">
-                                        {meal.distributor}
+                                        {meal.distributorName}
                                     </p>
                                     <div className="flex items-center gap-2 text-sm text-neutral">
                                         <FaClock />
-                                        <span>{meal.time}</span>
+                                        <span>{new Date(meal.postTime).toLocaleString()}</span>
                                     </div>
                                     <div className="flex justify-between items-center mt-4">
                                         <div className="flex items-center gap-2 text-warning">
