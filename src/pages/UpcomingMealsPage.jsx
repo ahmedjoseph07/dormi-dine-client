@@ -112,7 +112,7 @@ const UpcomingMealsPage = () => {
                                                 <span>{meal.rating}</span>
                                             </div>
                                             <button
-                                                disabled={!isPremiumUser}
+                                                disabled={!isPremiumUser || !user}
                                                 className={`btn btn-md flex items-center gap-1 ${
                                                     hasLiked
                                                         ? "btn-error text-white"

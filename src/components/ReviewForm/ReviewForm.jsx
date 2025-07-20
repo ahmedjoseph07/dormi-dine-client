@@ -100,7 +100,7 @@ const ReviewForm = ({ mealId }) => {
                 placeholder="Write your review here..."></textarea>
 
             <button
-                disabled={loading || rating === 0}
+                disabled={loading || rating === 0 || !user}
                 type="submit"
                 className="btn btn-accent">
                 {loading ? "Submitting..." : "Submit Review"}

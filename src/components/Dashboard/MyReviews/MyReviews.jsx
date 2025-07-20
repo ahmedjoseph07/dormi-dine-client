@@ -34,7 +34,7 @@ const MyReviews = () => {
             queryClient.invalidateQueries(["myReviews"]);
             Swal.fire({
                 position: "top-end",
-                icon: "warning",
+                icon: "success",
                 title: "Your Review Deleted",
                 showConfirmButton: false,
                 timer: 1500,
@@ -52,7 +52,13 @@ const MyReviews = () => {
         onSuccess: () => {
             setEditingReview(null);
             queryClient.invalidateQueries(["myReviews"]);
-            Swal.fire("Updated!", "Your review has been updated.", "success");
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your Review Updated",
+                showConfirmButton: false,
+                timer: 1500,
+            });
         },
     });
 

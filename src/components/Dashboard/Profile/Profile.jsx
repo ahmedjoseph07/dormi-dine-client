@@ -47,7 +47,7 @@ const Profile = () => {
                         {new Date(userData.joined).toLocaleDateString()}
                     </p>
                     <div className="flex gap-2 mt-2 flex-wrap flex-col">
-                        <span className={`badge  ${userData.package !== "free" ? "badge-warning":"badge-ghost" }  p-4 font-medium`}>
+                        <span className={`badge  ${userData.package !== "free" ? "badge-success":"badge-ghost" }  p-3 font-medium`}>
                             {userData.package.toUpperCase()}
                         </span>
                         <button className="btn btn-secondary btn-sm w-full md:w-1/6">

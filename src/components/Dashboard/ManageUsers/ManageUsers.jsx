@@ -61,7 +61,7 @@ const ManageUsers = () => {
             />
 
             {isLoading && (
-                <p className="text-center text-info">Loading users...</p>
+                <p className="text-center">Loading users...</p>
             )}
             {isError && (
                 <p className="text-center text-error">Failed to fetch users.</p>

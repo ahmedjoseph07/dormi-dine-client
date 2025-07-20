@@ -34,7 +34,11 @@ const MealDetails = () => {
         },
     });
 
-    const { data: meal = {},isLoading,isError,} = useQuery({
+    const {
+        data: meal = {},
+        isLoading,
+        isError,
+    } = useQuery({
         queryKey: ["mealDetails", mealId],
         queryFn: async () => {
             const res = await axiosInstance.get(`/api/meals/${mealId}`);
@@ -42,7 +46,6 @@ const MealDetails = () => {
         },
         enabled: !!mealId,
     });
-
 
     const { data: reviewsList = [], isLoading: isReviewsLoading } = useQuery({
         queryKey: ["reviews", mealId],
@@ -53,12 +56,11 @@ const MealDetails = () => {
         enabled: !!mealId,
     });
 
-
     const requestMealMutation = useMutation({
-        mutationFn: async ({likes,reviewsCount,_id}) => {
+        mutationFn: async ({ likes, reviewsCount, _id }) => {
             const requestedMeal = {
                 title: meal.title,
-                mealId:_id,
+                mealId: _id,
                 email: user.email,
                 name: user.displayName || "Anonymous",
                 likes,
@@ -169,6 +171,7 @@ const MealDetails = () => {
 
                 <div className="flex flex-col sm:flex-row gap-4">
                     <button
+                        disabled={!user}
                         className={`btn btn-md flex items-center gap-1 ${
                             hasLiked ? "btn-error text-white" : "btn-outline"
                         }`}
@@ -180,8 +183,18 @@ const MealDetails = () => {
                     </button>
 
                     <button
-                        onClick={() => requestMealMutation.mutate({likes,reviewsCount,_id})}
-                        disabled={requestMealMutation.isLoading || hasRequested || !isPremiumUser}
+                        onClick={() =>
+                            requestMealMutation.mutate({
+                                likes,
+                                reviewsCount,
+                                _id,
+                            })
+                        }
+                        disabled={
+                            requestMealMutation.isLoading ||
+                            hasRequested ||
+                            !isPremiumUser || !user
+                        }
                         className="btn btn-secondary">
                         <FaUtensils />{" "}
                         {requestMealMutation.isLoading

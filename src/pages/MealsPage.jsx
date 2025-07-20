@@ -95,15 +95,7 @@ const MealsPage = () => {
                     </div>
                 </div>
 
-                {/* <InfiniteScroll
-                    dataLength={dummyMeals.length}
-                    next={() => {}}
-                    hasMore={true}
-                    loader={
-                        <p className="text-center mt-4">
-                            <Spinner />
-                        </p>
-                    }> */}
+                
                 <h2 className="text-3xl font-bold text-primary mb-8 mt-16 text-center">
                     Meals
                 </h2>
@@ -161,7 +153,6 @@ const MealsPage = () => {
                         ))
                     )}
                 </div>
-                {/* </InfiniteScroll> */}
             </div>
         </div>
     );

@@ -35,10 +35,11 @@ const ServeMeal = () => {
         onSuccess: () => {
             queryClient.invalidateQueries(["requested-meals", search]);
             Swal.fire({
+                position:"top-end",
                 title: "Meal Served",
                 text: "Meal Served Succesfully",
                 icon: "success",
-                showCancelButton: false,
+                showConfirmButton: false,
                 timer: 1500
             });
         },
@@ -113,11 +114,7 @@ const ServeMeal = () => {
                                         <td>{r.name}</td>
                                         <td>
                                             <span
-                                                className={`badge p-4 ${
-                                                    r.status === "served"
-                                                        ? "badge-success"
-                                                        : "badge-warning"
-                                                }`}>
+                                                className={`badge p-4 flex justify-center ${r.status === "cancelled" ? "" : r.status==="pending" ? "badge-warning" : "badge-success"  }  items-center`}>
                                                 {r.status.toUpperCase()}
                                             </span>
                                         </td>

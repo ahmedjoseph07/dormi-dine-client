@@ -84,7 +84,7 @@ const RequestedMeals = () => {
                                     <td>{meal.likes}</td>
                                     <td>{meal.reviewsCount}</td>
                                     <td>
-                                        <span className="badge p-4 flex justify-center items-center">
+                                        <span className={`badge p-4 flex justify-center ${meal.status === "cancelled" ? "" : meal.status==="pending" ? "badge-warning" : "badge-success"  }  items-center`}>
                                             {meal.status.toUpperCase()}
                                         </span>
                                     </td>

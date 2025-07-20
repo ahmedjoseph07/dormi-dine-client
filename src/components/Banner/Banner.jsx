@@ -155,7 +155,7 @@ const Banner = () => {
                     <>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {results.map((meal,i) => (
-                                <Link to={`/meals/${meal._id}`}>
+                                <Link key={meal._id} to={`/meals/${meal._id}`}>
                                     <motion.div
                                         initial={{ opacity: 0, y: 20 }}
                                         whileInView={{ opacity: 1, y: 0 }}

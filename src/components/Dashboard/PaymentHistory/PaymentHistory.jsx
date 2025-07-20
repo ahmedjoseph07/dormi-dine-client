@@ -50,8 +50,8 @@ const PaymentHistory = () => {
                                     <td>{p.method}</td>
                                     <td>{p.transactionId}</td>
                                     <td>
-                                        <span className="badge p-4 flex justify-center items-center">
-                                            {p.package}
+                                        <span className={`badge ${p.package !== "free" ? "badge-success":"" }  p-4 font-medium`}>
+                                            {p.package.toUpperCase()}
                                         </span>
                                     </td>
                                     <td>
