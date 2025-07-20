@@ -4,6 +4,7 @@ import TypeWriter from "../../components/TypeWriter/TypeWriter";
 import { FiSearch } from "react-icons/fi";
 import { motion } from "framer-motion";
 import axiosInstance from "../../api/axiosInstance";
+import { Link } from "react-router";
 
 const Banner = () => {
     const [searchText, setSearchText] = useState("");
@@ -64,7 +65,7 @@ const Banner = () => {
                                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                         <FiSearch className="text-xl" />
                                     </div>
-                                    
+
                                     <input
                                         type="text"
                                         id="search"
@@ -89,16 +90,16 @@ const Banner = () => {
                                     <FiSearch className="text-xl" /> Search now
                                 </button>
                                 {isSubmitted && (
-                                        <button
-                                            onClick={() => {
-                                                setResults([]);
-                                                setSearchText("");
-                                                setIsSubmitted(false);
-                                            }}
-                                            className="btn btn-accent w-full sm:w-auto ml-3">
-                                            Clear
-                                        </button>
-                                    )}
+                                    <button
+                                        onClick={() => {
+                                            setResults([]);
+                                            setSearchText("");
+                                            setIsSubmitted(false);
+                                        }}
+                                        className="btn btn-accent w-full sm:w-auto ml-3">
+                                        Clear
+                                    </button>
+                                )}
                             </div>
                         </form>
 
@@ -153,26 +154,32 @@ const Banner = () => {
                 {isSubmitted && !loading && results.length > 0 && (
                     <>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {results.map((meal) => (
-                                <div
-                                    key={meal._id}
-                                    className="p-4 cursor-pointer rounded-xl shadow-xl bg-base-100 hover:shadow-secondary/30 transition duration-300">
-                                    <h3 className="text-lg font-bold text-primary">
-                                        {meal.title}
-                                    </h3>
-                                    <p className="text-md text-accent mt-1">
-                                        {meal.description}
-                                    </p>
-                                    <p className="mt-2">
-                                        Posted at :{" "}
-                                        {new Date(
-                                            meal.postTime
-                                        ).toLocaleString()}
-                                    </p>
-                                    <p className="text-secondary font-bold mt-2">
-                                        Price: ${meal.price}
-                                    </p>
-                                </div>
+                            {results.map((meal,i) => (
+                                <Link to={`/meals/${meal._id}`}>
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: i *0.2 }}
+                                        key={meal._id}
+                                        className="p-4 hover:scale-[1.02] cursor-pointer rounded-xl shadow-xl bg-base-100 hover:shadow-secondary/30 transition duration-300">
+                                        <h3 className="text-lg font-bold text-primary">
+                                            {meal.title}
+                                        </h3>
+                                        <p className="text-md text-accent mt-1">
+                                            {meal.description}
+                                        </p>
+                                        <p className="mt-2">
+                                            Posted at :{" "}
+                                            {new Date(
+                                                meal.postTime
+                                            ).toLocaleString()}
+                                        </p>
+                                        <p className="text-secondary font-bold mt-2">
+                                            Price: ${meal.price}
+                                        </p>
+                                    </motion.div>
+                                </Link>
                             ))}
                         </div>
                     </>
