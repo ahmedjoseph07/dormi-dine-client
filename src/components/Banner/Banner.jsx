@@ -86,7 +86,7 @@ const Banner = () => {
                             <div className="mt-4">
                                 <button
                                     type="submit"
-                                    className="btn btn-secondary w-full sm:w-auto">
+                                    className="btn btn-secondary sm:w-auto">
                                     <FiSearch className="text-xl" /> Search now
                                 </button>
                                 {isSubmitted && (
@@ -96,7 +96,7 @@ const Banner = () => {
                                             setSearchText("");
                                             setIsSubmitted(false);
                                         }}
-                                        className="btn btn-accent w-full sm:w-auto ml-3">
+                                        className="btn btn-accent my-4 sm:w-auto ml-3">
                                         Clear
                                     </button>
                                 )}
