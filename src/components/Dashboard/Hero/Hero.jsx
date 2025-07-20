@@ -58,18 +58,17 @@ const Hero = () => {
                     <h1 className="text-xl md:text-4xl font-extrabold mb-2">
                         Welcome back <br />
                         <span className="text-primary text-semibold">
-                            @{user.displayName}
+                            {user.displayName}
                         </span>
                         <br />
                     </h1>
                     <p className="text-accent max-w-md">
-                        Here's a quick overview of your platform's performance
-                        and user activity.
+                        {role === "admin"? "Here's a quick overview of your platform's performance and user activity.":"Welcome to dashboard"}
                     </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 w-full max-w-md">
-                    {stats.map(({ label, value }) => (
+                    {role === "admin" && stats.map(({ label, value }) => (
                         <div
                             key={label}
                             className="bg-base-100 cursor-pointer shadow-xl hover:scale-[1.02] transition-all duration-300 hover:shadow-secondary/30 rounded-lg px-5 py-4 flex flex-col items-center text-center">
