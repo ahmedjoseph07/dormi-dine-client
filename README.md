@@ -114,7 +114,7 @@ Follow these steps to run the DormiDine locally.
 ### 1. Clone the repository:
 
 ```
-git clone https://github.com/your-username/your-project-name.git
+git clone https://github.com/ahmedjoseph07/dormi-dine-client.git
 cd your-project-name
 ``` 
 
