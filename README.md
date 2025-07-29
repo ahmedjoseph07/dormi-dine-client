@@ -9,6 +9,12 @@ A full-featured **Hostel Meal Management System** for university use, built with
 
 ---
 
+---
+## 👑 Admin Credentials
+- Admin Email: `admin@admin.com`
+- Admin Password:`adminADMIN`
+---
+
 ## 🚀 Features
 
 - 🔐 **Student Authentication** (Login/Register with Social Auth)
