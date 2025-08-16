@@ -25,7 +25,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className="bg-base-200  flex justify-center shadow-xl">
+        <div className="bg-base-200 flex justify-center shadow-xl">
             <div className="drawer  md:bg-base-200 md:fixed w-full  z-50 top-0 max-w-7xl mx-auto">
                 <input
                     id="nav-drawer"

@@ -6,13 +6,13 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router";
 import logo from "../../assets/logo.png";
-import { MdSubscriptions } from "react-icons/md";
 
 const Footer = () => {
     return (
-        <div className="bg-base-200 pt-10 px-4 shadow-xl">
+        <div className="bg-base-200 pt-12 px-4 shadow-inner">
             <footer className="max-w-7xl mx-auto">
-                <div className=" mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 pb-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 pb-10">
+                    {/* Logo & About */}
                     <div className="flex flex-col gap-4">
                         <Link to="/" className="flex items-center gap-2">
                             <img
@@ -25,72 +25,70 @@ const Footer = () => {
                                 <span>Dine</span>
                             </div>
                         </Link>
-                        <p className="text-normal text-accent">
+                        <p className="text-accent text-sm md:text-base">
                             Simplifying hostel living with organized meal plans
-                            and better community experience.
+                            and a better community experience.
                         </p>
-                        <div className="flex gap-4 mt-2">
+                        <div className="flex gap-4 mt-2 text-accent">
                             <a
                                 href="#"
-                                className="hover:text-primary transition">
+                                className="hover:text-primary transition-colors duration-300">
                                 <FaFacebookF />
                             </a>
                             <a
                                 href="#"
-                                className="hover:text-primary transition">
+                                className="hover:text-primary transition-colors duration-300">
                                 <FaTwitter />
                             </a>
                             <a
                                 href="#"
-                                className="hover:text-primary transition">
+                                className="hover:text-primary transition-colors duration-300">
                                 <FaInstagram />
                             </a>
                             <a
                                 href="#"
-                                className="hover:text-primary transition">
+                                className="hover:text-primary transition-colors duration-300">
                                 <FaLinkedinIn />
                             </a>
                         </div>
                     </div>
 
-                    <div className="flex flex-col  gap-2">
-                        <h3 className="text-lg font-semibold">Quick Links</h3>
+                    {/* Quick Links */}
+                    <div className="flex flex-col gap-2">
+                        <h3 className="text-lg font-semibold text-neutral">
+                            Quick Links
+                        </h3>
                         <Link
                             to="/"
-                            className="hover:underline hover:text-primary text-accent">
+                            className="hover:underline hover:text-primary text-accent transition-colors duration-300">
                             Home
                         </Link>
                         <Link
                             to="/about"
-                            className="hover:underline hover:text-primary text-accent">
+                            className="hover:underline hover:text-primary text-accent transition-colors duration-300">
                             About Us
                         </Link>
                         <Link
                             to="/contact-us"
-                            className="hover:underline hover:text-primary text-accent">
+                            className="hover:underline hover:text-primary text-accent transition-colors duration-300">
                             Contact Us
                         </Link>
                     </div>
 
-                    {/* Newsletter */}
-                    <div className="flex flex-col gap-4">
-                        <h3 className="text-lg font-semibold">Newsletter</h3>
-                        <p className="text-normal text-accent">
-                            Stay updated with our latest features and updates.
+                    {/* Contact Info */}
+                    <div className="flex flex-col gap-2">
+                        <h3 className="text-lg font-semibold text-neutral">
+                            Contact
+                        </h3>
+                        <p className="text-accent text-sm md:text-base">
+                            123 Dormi Street, Hostel City, BD
                         </p>
-                        <form className="flex flex-col xl:flex-row w-full gap-2">
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className="outline-0 border py-2 px-4 w-full  sm:rounded-l-lg rounded-lg"
-                                required
-                            />
-                            <button
-                                type="submit"
-                                className="btn btn-secondary w-full sm:w-auto sm:rounded-r-lg rounded-lg">
-                                <MdSubscriptions className="text-xl" />Subscribe
-                            </button>
-                        </form>
+                        <p className="text-accent text-sm md:text-base">
+                            Email: support@dormidine.com
+                        </p>
+                        <p className="text-accent text-sm md:text-base">
+                            Phone: +880 1234 567890
+                        </p>
                     </div>
                 </div>
 
