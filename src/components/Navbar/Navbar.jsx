@@ -10,7 +10,7 @@ import useRole from "../../hooks/useRole";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
-    const {role} = useRole();
+    const { role } = useRole();
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -25,15 +25,14 @@ const Navbar = () => {
     };
 
     return (
-        <div className="bg-base-200 shadow-xl">
-            <div className="drawer z-50 top-0 max-w-7xl mx-auto">
+        <div className="bg-base-200  flex justify-center shadow-xl">
+            <div className="drawer  md:bg-base-200 md:fixed w-full  z-50 top-0 max-w-7xl mx-auto">
                 <input
                     id="nav-drawer"
                     type="checkbox"
                     className="drawer-toggle"
                 />
                 <div className="drawer-content flex items-center justify-between px-4 py-3">
-
                     {/*Brand logo*/}
                     <div className="flex items-center justify-center gap-4">
                         <Link to="/" className="flex items-center gap-2">
@@ -51,7 +50,7 @@ const Navbar = () => {
                     </div>
 
                     {/*Desktop Menu */}
-                    <div className="hidden md:flex gap-6 items-center">
+                    <div className="hidden md:flex text-xl gap-6 items-center">
                         <NavLink
                             to="/"
                             className={({ isActive }) =>
@@ -68,10 +67,12 @@ const Navbar = () => {
                             Home
                         </NavLink>
 
-                        <NavLink
-                            to="/meals"
-                            className={({ isActive }) =>
-                                `relative text-neutral duration-200 
+                        {user && (
+                            <>
+                                <NavLink
+                                    to="/meals"
+                                    className={({ isActive }) =>
+                                        `relative text-neutral duration-200 
                             after:absolute after:top-0 after:left-0
                             after:h-[2px] after:w-full after:bg-primary 
                             after:origin-left after:scale-x-0 after:transition-transform after:duration-300 
@@ -80,12 +81,29 @@ const Navbar = () => {
                                     ? "font-bold after:scale-x-100 text-primary"
                                     : "hover:after:scale-x-100"
                             }`
-                            }>
-                            Meals
-                        </NavLink>
+                                    }>
+                                    Meals
+                                </NavLink>
 
+                                <NavLink
+                                    to="/upcoming-meals"
+                                    className={({ isActive }) =>
+                                        `relative text-neutral duration-200 
+                            after:absolute after:top-0 after:left-0
+                            after:h-[2px] after:w-full after:bg-primary 
+                            after:origin-left after:scale-x-0 after:transition-transform after:duration-300 
+                            ${
+                                isActive
+                                    ? "font-bold after:scale-x-100 text-primary"
+                                    : "hover:after:scale-x-100"
+                            }`
+                                    }>
+                                    Upcoming
+                                </NavLink>
+                            </>
+                        )}
                         <NavLink
-                            to="/upcoming-meals"
+                            to="/user-guide"
                             className={({ isActive }) =>
                                 `relative text-neutral duration-200 
                             after:absolute after:top-0 after:left-0
@@ -97,20 +115,35 @@ const Navbar = () => {
                                     : "hover:after:scale-x-100"
                             }`
                             }>
-                            Upcoming Meals
+                            User Guide
+                        </NavLink>
+                        <NavLink
+                            to="/support"
+                            className={({ isActive }) =>
+                                `relative text-neutral duration-200 
+                            after:absolute after:top-0 after:left-0
+                            after:h-[2px] after:w-full after:bg-primary 
+                            after:origin-left after:scale-x-0 after:transition-transform after:duration-300 
+                            ${
+                                isActive
+                                    ? "font-bold after:scale-x-100 text-primary"
+                                    : "hover:after:scale-x-100"
+                            }`
+                            }>
+                            Support
                         </NavLink>
                     </div>
 
                     {/*User Avater Dropdown */}
                     <div className="hidden md:flex justify-center items-center gap-4">
-                        <FaBell className="cursor-pointer hover:scale-130 transition all duration-300 " />
+                        <FaBell className="cursor-pointer scale-150 hover:scale-200 transition all duration-300 " />
                         {user ? (
                             <div className="dropdown dropdown-end">
                                 <div
                                     tabIndex={0}
                                     role="button"
                                     className="btn btn-ghost btn-circle avatar tooltip tooltip-right before:text-primary before:bg-neutral before:font-bold"
-                                    data-tip={ role.toUpperCase() || "Profile"}>
+                                    data-tip={role.toUpperCase() || "Profile"}>
                                     <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                         <img src={user.photoURL} />
                                     </div>
@@ -163,7 +196,6 @@ const Navbar = () => {
                             </svg>
                         </label>
                     </div>
-
                 </div>
 
                 {/* Drawer Side (Mobile Menu) */}
@@ -179,20 +211,42 @@ const Navbar = () => {
                                 Home
                             </NavLink>
                         </li>
+
+                        {user && (
+                            <>
+                                <li>
+                                    <NavLink
+                                        to="/meals"
+                                        className="text-neutral hover:text-primary">
+                                        Meals
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to="/upcoming-meals"
+                                        className="text-neutral hover:text-primary">
+                                        Upcoming
+                                    </NavLink>
+                                </li>
+                            </>
+                        )}
+
                         <li>
                             <NavLink
-                                to="/meals"
+                                to="/user-guide"
                                 className="text-neutral hover:text-primary">
-                                Meals
+                                User Guide
                             </NavLink>
                         </li>
+
                         <li>
                             <NavLink
-                                to="/upcoming-meals"
+                                to="/support"
                                 className="text-neutral hover:text-primary">
-                                Upcoming Meals
+                                Support
                             </NavLink>
                         </li>
+
                         <li className="mt-6 border-t pt-4">
                             {user ? (
                                 <>
@@ -219,7 +273,6 @@ const Navbar = () => {
                         </li>
                     </ul>
                 </div>
-
             </div>
         </div>
     );

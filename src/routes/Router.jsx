@@ -25,6 +25,8 @@ import CheckoutPage from "../pages/CheckoutPage";
 import PrivateRoute from "../routes/PrivateRoute"
 import AdminRoutes from "./AdminRoutes";
 import ErrorPage from "../pages/ErrorPage";
+import UserGuidePage from "../pages/UserGuidePage";
+import SupportPage from "../pages/SupportPage";
 
 export const router = createBrowserRouter([
     {
@@ -63,6 +65,14 @@ export const router = createBrowserRouter([
             {
                 path: "/meals/:mealId",
                 Component: MealDetailsPage,
+            },
+            {
+                path: "/user-guide",
+                Component: UserGuidePage,
+            },
+            {
+                path: "/support",
+                Component: SupportPage,
             },
         ],
     },

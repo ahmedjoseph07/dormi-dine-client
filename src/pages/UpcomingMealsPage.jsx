@@ -61,7 +61,7 @@ const UpcomingMealsPage = () => {
         );
 
     return (
-        <div className="bg-base-200 px-4 py-12">
+        <div className="bg-base-200 px-4 py-12 md:mt-20">
             <div className="max-w-6xl mx-auto">
                 <h2 className="text-3xl font-bold text-primary mb-6 text-center">
                     Upcoming Meals

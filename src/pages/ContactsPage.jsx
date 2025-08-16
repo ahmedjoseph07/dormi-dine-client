@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const ContactPage = () => {
     return (
-        <section className="py-16 px-4 bg-base-200 text-center">
+        <div className="py-16 px-4 bg-base-200 text-center md:mt-20">
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -36,7 +36,7 @@ const ContactPage = () => {
                     </button>
                 </form>
             </motion.div>
-        </section>
+        </div>
     );
 };
 

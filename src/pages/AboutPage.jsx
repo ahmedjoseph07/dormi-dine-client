@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const AboutPage = () => {
     return (
-        <section className="py-16 px-4 bg-base-200 text-center">
+        <section className="py-16 px-4 bg-base-200 text-center md:mt-20">
             <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}

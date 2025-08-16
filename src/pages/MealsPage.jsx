@@ -54,7 +54,7 @@ const MealsPage = () => {
     if (isError) return <p className="text-red-500">Failed to load meals.</p>;
 
     return (
-        <div className="min-h-screen bg-base-200 px-4 py-10">
+        <div className="min-h-screen bg-base-200 px-4 py-10 md:mt-25">
             <div className="max-w-6xl mx-auto space-y-6">
                 <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
                     <div className="flex w-full md:w-1/2">

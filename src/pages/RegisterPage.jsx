@@ -139,7 +139,7 @@ const RegisterPage = () => {
 
     return (
         <motion.div
-            className="min-h-screen flex items-center justify-center bg-base-200 px-4 py-8"
+            className="min-h-screen flex items-center justify-center bg-base-200 px-4 py-8 "
             initial={{ opacity: 0, y: -90 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -30 }}

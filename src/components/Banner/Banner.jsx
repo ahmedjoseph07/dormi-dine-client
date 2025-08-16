@@ -33,7 +33,7 @@ const Banner = () => {
     };
 
     return (
-        <div className="relative bg-base-200">
+        <div className="relative bg-base-200 md:mt-20">
             <div className="relative py-12 sm:py-16 lg:py-20">
                 <div className="relative px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
                     <div className="max-w-lg mx-auto text-center xl:max-w-2xl">
