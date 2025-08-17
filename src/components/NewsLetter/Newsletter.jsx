@@ -1,16 +1,31 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import axiosInstance from "../../api/axiosInstance";
 
 const Newsletter = () => {
     const [email, setEmail] = useState("");
     const [subscribed, setSubscribed] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    const handleSubscribe = (e) => {
+    const handleSubscribe = async (e) => {
         e.preventDefault();
-        if (email) {
-            // Call your API here to save the email
-            setSubscribed(true);
-            setEmail("");
+        if (!email) return;
+
+        try {
+            setLoading(true);
+            setError("");
+
+            const res = await axiosInstance.post("api/subscribe", { email });
+
+            if (res.status === 200) {
+                setSubscribed(true);
+                setEmail("");
+            }
+        } catch (err) {
+            setError("Subscription failed. Try again later.", err);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -38,20 +53,22 @@ const Newsletter = () => {
                             placeholder="Enter your email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="border focus:outline-0 p-3 rounded-lg w-full sm:flex-1"
+                            className="border focus:outline-0 px-3 rounded-lg w-full sm:flex-1"
                             required
                         />
                         <button
+                            disabled={loading}
                             type="submit"
                             className="btn btn-secondary w-full sm:w-auto px-6 py-3 rounded-lg">
-                            Subscribe
+                            {loading ? "Subscribing..." : "Subscribe"}
                         </button>
                     </form>
                 ) : (
                     <p className="text-accent text-lg font-semibold mt-4">
-                        Thank you for subscribing! 🎉
+                        Thank you for subscribing!
                     </p>
                 )}
+                {error && <p className="text-red-500 mt-3">{error}</p>}
             </motion.div>
         </div>
     );
